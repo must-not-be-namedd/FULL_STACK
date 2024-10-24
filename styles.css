@@ -57,5 +57,57 @@ footer {
     margin-top: 20px;
     color: #777;
 }
+/* Existing CSS from locker booking page */
+
+#visitor-check button {
+    background-color: #1db954;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#visitor-check button:hover {
+    background-color: #17a743;
+}
+
+#signup-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1f1f1f;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+#signup-form label, #signup-form input {
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+#rate-service {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+}
+
+.star {
+    font-size: 2rem;
+    color: gold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.star:hover, .star.selected {
+    transform: scale(1.2);
+}
 
 
