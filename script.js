@@ -1,20 +1,42 @@
-const lockers = [
-    { id: 1, location: 'Bus Stop 1', items: ['Wired Headphones', 'Bluetooth Headphones', 'Portable Powerbank', 'Wi-Fi Hotspot'], available: true, distance: 0.5 },
-    { id: 2, location: 'Metro Station A', items: ['Wired Headphones', 'Wi-Fi Hotspot', 'Portable Powerbank'], available: true, distance: 1.0 },
-    { id: 3, location: 'Bus Stop 2', items: ['Bluetooth Headphones', 'Portable Powerbank'], available: false, distance: 1.5 },
-    { id: 4, location: 'Metro Station B', items: ['Wired Headphones', 'Bluetooth Headphones', 'Wi-Fi Hotspot'], available: true, distance: 0.8 },
+let lockers = [
+    { id: 1, location: "Metro Station A", distance: 1.2, available: true, items: ["Bluetooth Headphones", "Powerbank", "Wi-Fi Hotspot"] },
+    { id: 2, location: "Bus Stop B", distance: 0.8, available: true, items: ["Wired Headphones", "Powerbank"] },
+    { id: 3, location: "Metro Station C", distance: 2.3, available: true, items: ["Wi-Fi Hotspot", "Powerbank"] }
 ];
+let rented = false; // Track if the user has already rented an item
 
 function getLocation() {
-    // Simulating getting user location (replace with real geolocation for production)
-    const userLocation = { latitude: 0, longitude: 0 }; // Example coordinates
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
 
-    // Filter and sort lockers based on distance
-    const sortedLockers = lockers
-        .filter(locker => locker.available)
-        .sort((a, b) => a.distance - b.distance);
+function showPosition(position) {
+    const userLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    };
+    console.log(`Your Location: ${userLocation.latitude}, ${userLocation.longitude}`);
+    displayLockers(lockers); // Simulate locker display based on the location
+}
 
-    displayLockers(sortedLockers);
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
 }
 
 function displayLockers(lockers) {
@@ -40,15 +62,24 @@ function displayLockers(lockers) {
 }
 
 function bookLocker(lockerId) {
+    if (rented) {
+        alert("You already have a device rented. Please return it before renting again.");
+        return;
+    }
+
     const locker = lockers.find(l => l.id === lockerId);
     if (locker && locker.available) {
+        rented = true; // User has rented an item
         locker.available = false;
         alert(`You have successfully booked a locker at ${locker.location}!\n\nProceeding to payment...`);
+
         // Simulate payment gateway
         setTimeout(() => {
             alert(`Payment successful! Please return the items on time to avoid a fine.`);
         }, 1000);
+
         displayLockers(lockers.filter(l => l.available)); // Refresh the list
     }
 }
+
 
