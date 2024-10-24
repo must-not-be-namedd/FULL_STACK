@@ -1,78 +1,61 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
     margin: 0;
     padding: 0;
-    background-color: #1e1e1e;
-    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
-
-header {
-    background-color: #007bff;
-    color: white;
+h1, p {
     text-align: center;
-    padding: 1rem;
 }
-
-.search-container {
-    display: flex;
-    justify-content: center;
-    margin: 20px;
-}
-
-input[type="text"] {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #2e2e2e;
-    color: #fff;
-}
-
-button {
-    padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.locker-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+#locker-list {
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 1000px;
 }
-
 .locker-item {
-    background-color: #333;
-    border: 1px solid #555;
-    border-radius: 5px;
-    margin: 10px;
+    background-color: #1f1f1f;
     padding: 20px;
-    width: 250px;
-    text-align: center;
-    transition: transform 0.2s;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease;
 }
-
 .locker-item:hover {
     transform: scale(1.05);
 }
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #007bff;
+button {
+    background-color: #1db954;
+    border: none;
     color: white;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-
-button:disabled {
-    background-color: #555;
-    cursor: not-allowed;
+button:hover {
+    background-color: #17a743;
+}
+.guidelines {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+}
+.guidelines h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+footer {
+    margin-top: 20px;
+    color: #777;
 }
 
 
