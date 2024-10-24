@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locker Booking - Metro & Bus Stops</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Locker Booking</title>
 </head>
 <body>
-    <header>
-        <h1>Locker Booking</h1>
-    </header>
-    <main>
-        <div class="search-container">
-            <input type="text" id="location" placeholder="Enter your location" />
-            <button onclick="getLocation()">Find Lockers</button>
-        </div>
-        <div id="locker-list" class="locker-list"></div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Locker Booking. All Rights Reserved.</p>
-    </footer>
+
+    <h1>Book Lockers for Your Devices</h1>
+    <p>Available lockers at nearby Metro Stations and Bus Stops</p>
+
+    <button onclick="getLocation()">Find Nearby Lockers</button>
+
+    <div id="locker-list"></div>
+
+    <div class="guidelines">
+        <h3>Booking & Return Guidelines</h3>
+        <ul>
+            <li>You can rent only one device at a time (Headphones, Powerbank, or Wi-Fi Hotspot).</li>
+            <li>Ensure to return the rented device within the stipulated time to avoid fines.</li>
+            <li>A late fine of $5 will be charged for each additional hour after the return deadline.</li>
+            <li>Return the device to the same locker where you rented it.</li>
+        </ul>
+    </div>
+
+    <footer>&copy; 2024 Locker Booking Service | Powered by GPS & Metro Stations</footer>
+
     <script src="script.js"></script>
 </body>
 </html>
