@@ -82,4 +82,55 @@ function bookLocker(lockerId) {
     }
 }
 
+// Existing locker booking code
+
+// Handle visitor check
+function showSignup() {
+    document.getElementById('visitor-check').style.display = 'none';
+    document.getElementById('signup-form').style.display = 'block';
+}
+
+function proceedToBooking() {
+    // Redirect to locker booking page (index.html)
+    window.location.href = 'index.html';
+}
+
+// Handle account creation
+document.getElementById('create-account').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // For simplicity, we'll log these values and show a message (real implementation would involve backend)
+    console.log(`Account Created: ${username}, Password: ${password}`);
+    alert('Account created successfully! Proceeding to locker booking...');
+
+    // Redirect to locker booking page after account creation
+    window.location.href = 'index.html';
+});
+
+// Star Rating Logic
+let selectedRating = 0;
+
+document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', function() {
+        selectedRating = this.getAttribute('data-value');
+        document.querySelectorAll('.star').forEach(star => {
+            star.classList.remove('selected');
+        });
+        this.classList.add('selected');
+        console.log(`Rating selected: ${selectedRating}`);
+    });
+});
+
+function submitRating() {
+    if (selectedRating > 0) {
+        alert(`Thank you for your rating of ${selectedRating} stars!`);
+        // Redirect to locker booking page
+        window.location.href = 'index.html';
+    } else {
+        alert('Please select a rating before submitting.');
+    }
+}
+
 
