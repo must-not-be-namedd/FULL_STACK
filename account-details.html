@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Details</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Your Account Details</h1>
+
+    <div id="account-info">
+        <p><strong>Username:</strong> <span id="username-display"></span></p>
+        <p><strong>Location:</strong> <span id="location-display"></span></p>
+        <h3>Booking History:</h3>
+        <ul id="booking-history">
+            <li>No bookings yet.</li>
+        </ul>
+        <button onclick="continueBooking()">Continue Booking</button>
+    </div>
+
+    <footer>&copy; 2024 Locker Booking Service</footer>
+
+    <script src="script.js"></script>
+    <script>
+        // On page load, get the logged-in user's data from localStorage
+        window.onload = function() {
+            const currentUser = localStorage.getItem('currentUser');
+            
+            // Check if the user is logged in
+            if (!currentUser) {
+                alert('Please log in to view your account details.');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Find the user from the users array
+            const user = users.find(u => u.username === currentUser);
+
+            if (user) {
+                // Display user info
+                document.getElementById('username-display').textContent = user.username;
+                document.getElementById('location-display').textContent = user.location;
+
+                // Display booking history
+                const bookingHistoryList = document.getElementById('booking-history');
+                if (user.bookings.length > 0) {
+                    user.bookings.forEach(booking => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Booked at: ${booking.location} | Devices: ${booking.devices.join(', ')}`;
+                        bookingHistoryList.appendChild(listItem);
+                    });
+                }
+            }
+        };
+
+        function continueBooking() {
+            // Redirect to the booking page (this could be another page like 'booking.html')
+            alert('Redirecting to the booking page...');
+            window.location.href = 'booking.html';
+        }
+    </script>
+</body>
+</html>
