@@ -5,6 +5,63 @@ let lockers = [
 ];
 let rented = false; // Track if the user has already rented an item
 
+// Simulating a simple in-memory "database" for storing users and their data
+let users = [];
+
+function showSignup() {
+    document.getElementById('visitor-check').style.display = 'none';
+    document.getElementById('signup-form').style.display = 'block';
+    document.getElementById('login-form').style.display = 'none';
+}
+
+function showLogin() {
+    document.getElementById('visitor-check').style.display = 'none';
+    document.getElementById('login-form').style.display = 'block';
+    document.getElementById('signup-form').style.display = 'none';
+}
+
+// Handle account creation
+document.getElementById('create-account').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Save user data
+    users.push({
+        username: username,
+        password: password,
+        bookings: [],
+        location: "Unknown", // Default location
+    });
+
+    alert('Account created successfully! Proceeding to your account details...');
+
+    // Redirect to account details page
+    localStorage.setItem('currentUser', username);
+    window.location.href = 'account-details.html';
+});
+
+// Handle login process
+document.getElementById('login-account').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const loginUsername = document.getElementById('login-username').value;
+    const loginPassword = document.getElementById('login-password').value;
+
+    // Check if user exists and password matches
+    const user = users.find(u => u.username === loginUsername && u.password === loginPassword);
+    
+    if (user) {
+        alert('Login successful! Redirecting to account details...');
+
+        // Store the username in localStorage and redirect
+        localStorage.setItem('currentUser', loginUsername);
+        window.location.href = 'account-details.html';
+    } else {
+        alert('Invalid username or password.');
+    }
+});
+
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -132,5 +189,53 @@ function submitRating() {
         alert('Please select a rating before submitting.');
     }
 }
+
+document.getElementById('payment-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const deviceCount = document.getElementById('device-count').value;
+
+    if (!deviceCount) {
+        alert("Please enter the number of devices.");
+        return;
+    }
+
+    const totalAmount = deviceCount * 5; // Example: $5 per device
+    localStorage.setItem('totalAmount', totalAmount);
+    localStorage.setItem('deviceCount', deviceCount);
+    localStorage.setItem('lockerLocation', selectedLocker.location);
+    localStorage.setItem('rentedItems', rentedItems.join(', '));
+
+    // Simulate payment process
+    setTimeout(() => {
+        window.location.href = 'confirmation.html';
+    }, 1000);
+});
+
+// Confirmation Page
+window.onload = function() {
+    if (window.location.href.includes("confirmation.html")) {
+        // Retrieve stored data from localStorage
+        const totalAmount = localStorage.getItem('totalAmount');
+        const deviceCount = localStorage.getItem('deviceCount');
+        const lockerLocation = localStorage.getItem('lockerLocation');
+        const rentedItems = localStorage.getItem('rentedItems');
+
+        // Display booking details
+        document.getElementById('locker-location').textContent = lockerLocation;
+        document.getElementById('device-list').textContent = rentedItems;
+        document.getElementById('total-payment').textContent = totalAmount;
+
+        // Generate QR Code with booking details (for the ticket)
+        const qrCodeData = `Locker Booking:\nLocation: ${lockerLocation}\nDevices: ${rentedItems}\nTotal: $${totalAmount}`;
+        new QRCode(document.getElementById("qr-code"), {
+            text: qrCodeData,
+            width: 128,
+            height: 128
+        });
+
+        // Optional: Clear localStorage after booking
+        localStorage.clear();
+    }
+};
 
 
