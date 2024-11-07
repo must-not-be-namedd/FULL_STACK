@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account and Rate Us</title>
+    <title>Locker Booking Service</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
 
     <div id="visitor-check">
         <button onclick="showSignup()">Yes, I want to create an account</button>
-        <button onclick="proceedToBooking()">No, I already have an account</button>
+        <button onclick="showLogin()">No, I already have an account</button>
     </div>
 
     <div id="signup-form" style="display:none;">
@@ -29,18 +29,21 @@
         </form>
     </div>
 
-    <div id="rate-service" style="display:none;">
-        <h2>Rate Your Experience</h2>
-        <p>We value your feedback! Please rate our service:</p>
-        <div class="stars">
-            <span class="star" data-value="1">&#9733;</span>
-            <span class="star" data-value="2">&#9733;</span>
-            <span class="star" data-value="3">&#9733;</span>
-            <span class="star" data-value="4">&#9733;</span>
-            <span class="star" data-value="5">&#9733;</span>
-        </div>
-        <button onclick="submitRating()">Submit Rating</button>
+    <div id="login-form" style="display:none;">
+        <h2>Login to Your Account</h2>
+        <form id="login-account">
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="login-username" required><br>
+
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="login-password" required><br>
+
+            <button type="submit">Login</button>
+        </form>
     </div>
+    <br>
+    <br>
+    
 
     <footer>&copy; 2024 Locker Booking Service</footer>
 
