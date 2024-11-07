@@ -1,0 +1,30 @@
+<!-- confirmation.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Payment Successful!</h1>
+        
+        <h3>Booking Details</h3>
+        <p>Location: <span id="locker-location"></span></p>
+        <p>Devices Rented: <span id="device-list"></span></p>
+        <p>Total Payment: $<span id="total-payment"></span></p>
+
+        <div id="ticket">
+            <h3>Your Ticket</h3>
+            <div id="qr-code"></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
