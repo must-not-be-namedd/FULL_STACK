@@ -8,12 +8,14 @@ let rented = false; // Track if the user has already rented an item
 // Simulating a simple in-memory "database" for storing users and their data
 let users = [];
 
+// Show Signup form
 function showSignup() {
     document.getElementById('visitor-check').style.display = 'none';
     document.getElementById('signup-form').style.display = 'block';
     document.getElementById('login-form').style.display = 'none';
 }
 
+// Show Login form
 function showLogin() {
     document.getElementById('visitor-check').style.display = 'none';
     document.getElementById('login-form').style.display = 'block';
@@ -35,10 +37,10 @@ document.getElementById('create-account').addEventListener('submit', function(ev
     });
 
     alert('Account created successfully! Proceeding to your account details...');
-
-    // Redirect to account details page
+    
+    // Redirect to locker booking page
     localStorage.setItem('currentUser', username);
-    window.location.href = 'account-details.html';
+    window.location.href = 'index.html';
 });
 
 // Handle login process
@@ -49,19 +51,17 @@ document.getElementById('login-account').addEventListener('submit', function(eve
 
     // Check if user exists and password matches
     const user = users.find(u => u.username === loginUsername && u.password === loginPassword);
-    
+
     if (user) {
         alert('Login successful! Redirecting to account details...');
-
-        // Store the username in localStorage and redirect
         localStorage.setItem('currentUser', loginUsername);
-        window.location.href = 'account-details.html';
+        window.location.href = 'index.html';
     } else {
         alert('Invalid username or password.');
     }
 });
 
-
+// Function to get user's location
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -70,15 +70,17 @@ function getLocation() {
     }
 }
 
+// Show user's position
 function showPosition(position) {
     const userLocation = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
     };
     console.log(`Your Location: ${userLocation.latitude}, ${userLocation.longitude}`);
-    displayLockers(lockers); // Simulate locker display based on the location
+    displayLockers(lockers); // Display lockers based on location
 }
 
+// Handle errors in geolocation
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -96,6 +98,7 @@ function showError(error) {
     }
 }
 
+// Display lockers based on location
 function displayLockers(lockers) {
     const lockerList = document.getElementById('locker-list');
     lockerList.innerHTML = ''; // Clear previous results
@@ -118,6 +121,7 @@ function displayLockers(lockers) {
     });
 }
 
+// Handle locker booking
 function bookLocker(lockerId) {
     if (rented) {
         alert("You already have a device rented. Please return it before renting again.");
@@ -130,112 +134,15 @@ function bookLocker(lockerId) {
         locker.available = false;
         alert(`You have successfully booked a locker at ${locker.location}!\n\nProceeding to payment...`);
 
-        // Simulate payment gateway
+        // Save the booking data to localStorage before redirecting
+        localStorage.setItem('lockerLocation', locker.location);
+        localStorage.setItem('rentedItems', locker.items.join(', '));
+
+        // Redirect to payment page
         setTimeout(() => {
-            alert(`Payment successful! Please return the items on time to avoid a fine.`);
+            window.location.href = 'payment.html';
         }, 1000);
 
-        displayLockers(lockers.filter(l => l.available)); // Refresh the list
+        displayLockers(lockers.filter(l => l.available)); // Refresh the list of available lockers
     }
 }
-
-// Existing locker booking code
-
-// Handle visitor check
-function showSignup() {
-    document.getElementById('visitor-check').style.display = 'none';
-    document.getElementById('signup-form').style.display = 'block';
-}
-
-function proceedToBooking() {
-    // Redirect to locker booking page (index.html)
-    window.location.href = 'index.html';
-}
-
-// Handle account creation
-document.getElementById('create-account').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    // For simplicity, we'll log these values and show a message (real implementation would involve backend)
-    console.log(`Account Created: ${username}, Password: ${password}`);
-    alert('Account created successfully! Proceeding to locker booking...');
-
-    // Redirect to locker booking page after account creation
-    window.location.href = 'index.html';
-});
-
-// Star Rating Logic
-let selectedRating = 0;
-
-document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('click', function() {
-        selectedRating = this.getAttribute('data-value');
-        document.querySelectorAll('.star').forEach(star => {
-            star.classList.remove('selected');
-        });
-        this.classList.add('selected');
-        console.log(`Rating selected: ${selectedRating}`);
-    });
-});
-
-function submitRating() {
-    if (selectedRating > 0) {
-        alert(`Thank you for your rating of ${selectedRating} stars!`);
-        // Redirect to locker booking page
-        window.location.href = 'index.html';
-    } else {
-        alert('Please select a rating before submitting.');
-    }
-}
-
-document.getElementById('payment-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const deviceCount = document.getElementById('device-count').value;
-
-    if (!deviceCount) {
-        alert("Please enter the number of devices.");
-        return;
-    }
-
-    const totalAmount = deviceCount * 5; // Example: $5 per device
-    localStorage.setItem('totalAmount', totalAmount);
-    localStorage.setItem('deviceCount', deviceCount);
-    localStorage.setItem('lockerLocation', selectedLocker.location);
-    localStorage.setItem('rentedItems', rentedItems.join(', '));
-
-    // Simulate payment process
-    setTimeout(() => {
-        window.location.href = 'confirmation.html';
-    }, 1000);
-});
-
-// Confirmation Page
-window.onload = function() {
-    if (window.location.href.includes("confirmation.html")) {
-        // Retrieve stored data from localStorage
-        const totalAmount = localStorage.getItem('totalAmount');
-        const deviceCount = localStorage.getItem('deviceCount');
-        const lockerLocation = localStorage.getItem('lockerLocation');
-        const rentedItems = localStorage.getItem('rentedItems');
-
-        // Display booking details
-        document.getElementById('locker-location').textContent = lockerLocation;
-        document.getElementById('device-list').textContent = rentedItems;
-        document.getElementById('total-payment').textContent = totalAmount;
-
-        // Generate QR Code with booking details (for the ticket)
-        const qrCodeData = `Locker Booking:\nLocation: ${lockerLocation}\nDevices: ${rentedItems}\nTotal: $${totalAmount}`;
-        new QRCode(document.getElementById("qr-code"), {
-            text: qrCodeData,
-            width: 128,
-            height: 128
-        });
-
-        // Optional: Clear localStorage after booking
-        localStorage.clear();
-    }
-};
-
-
