@@ -1,4 +1,3 @@
-<!-- confirmation.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,5 +25,25 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            // Retrieve booking details from localStorage
+            const lockerLocation = localStorage.getItem('lockerLocation');
+            const rentedItems = localStorage.getItem('rentedItems');
+            const totalAmount = localStorage.getItem('totalAmount');
+
+            // Populate the booking details on the confirmation page
+            document.getElementById('locker-location').textContent = lockerLocation;
+            document.getElementById('device-list').textContent = rentedItems;
+            document.getElementById('total-payment').textContent = totalAmount;
+
+            // Generate the QR Code for the booking
+            const qrCode = new QRCode(document.getElementById("qr-code"), {
+                text: `Locker Location: ${lockerLocation}\nItems: ${rentedItems}\nTotal Payment: $${totalAmount}`,
+                width: 128,
+                height: 128
+            });
+        };
+    </script>
 </body>
 </html>
