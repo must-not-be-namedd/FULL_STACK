@@ -12,6 +12,7 @@
         <form id="payment-form">
             <label for="device-count">Number of Devices:</label>
             <input type="number" id="device-count" name="device-count" min="1" required readonly>
+            <p>Total Charge: $<span id="total-amount-summary"></span></p>
             <button type="submit">Proceed to Pay</button>
         </form>
 
@@ -25,16 +26,14 @@
     </div>
 
     <script>
-        const pricePerDevice = 5; // Cost per device
-        const selectedDevices = localStorage.getItem('selectedDevices').split(', ');
+        // Retrieve total amount from localStorage
+        const totalAmount = localStorage.getItem('totalAmount');
+        const selectedDevices = JSON.parse(localStorage.getItem('selectedDevices'));
 
-        // Update the number of devices and total amount
-        const deviceCount = selectedDevices.length;
-        const totalAmount = deviceCount * pricePerDevice;
-
-        document.getElementById('device-count').value = deviceCount;
-        document.getElementById('device-count-summary').textContent = deviceCount;
-        document.getElementById('total-amount-summary').textContent = totalAmount.toFixed(2);
+        // Display total amount and number of devices
+        document.getElementById('device-count').value = selectedDevices.length;
+        document.getElementById('device-count-summary').textContent = selectedDevices.length;
+        document.getElementById('total-amount-summary').textContent = totalAmount;
 
         // Handle payment confirmation
         document.getElementById('payment-form').addEventListener('submit', function(event) {
@@ -44,7 +43,7 @@
             alert('Payment successful! Your booking is confirmed.');
 
             // Store booking details in localStorage
-            localStorage.setItem('totalAmount', totalAmount.toFixed(2));
+            localStorage.setItem('totalAmount', totalAmount);
 
             // Redirect to confirmation page
             window.location.href = 'confirmation.html';
