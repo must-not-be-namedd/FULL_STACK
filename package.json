@@ -1,0 +1,21 @@
+{
+    "name": "mongodb2",
+    "version": "1.0.0",
+    "main": "serverss.js",
+    "scripts": {
+        "start": "node serverss.js",
+        "dev": "nodemon serverss.js"
+    },
+    "dependencies": {
+        "express": "^4.21.2",
+        "mongoose": "^7.8.3",
+        "path": "^0.12.7"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.22"
+    },
+    "author": "",
+    "license": "ISC",
+    "keywords": [],
+    "description": ""
+}
