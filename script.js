@@ -5,6 +5,7 @@ let lockers = [
 ];
 let rented = false; // Track if the user has already rented an item
 let users = []; // Simulating a simple in-memory database
+let selectedDevices = []; // To store selected devices for payment
 
 // Navigate to Signup page
 function showSignup() {
@@ -129,15 +130,99 @@ function bookLocker(lockerId) {
         locker.available = false; // Update locker availability
         alert(`You have successfully booked a locker at ${locker.location}!`);
 
-        // Save booking details
+        // Save locker details
         localStorage.setItem('lockerLocation', locker.location);
-        localStorage.setItem('rentedItems', locker.items.join(', '));
+        localStorage.setItem('availableItems', JSON.stringify(locker.items));
 
-        // Redirect to payment page
+        // Redirect to device selection page
         setTimeout(() => {
-            window.location.href = 'payment.html';
+            window.location.href = 'devices.html';
         }, 1000);
 
         displayLockers(lockers.filter(l => l.available)); // Refresh locker list
     }
+}
+
+// Handle Device Selection on devices.html
+function displayAvailableDevices() {
+    const availableItems = JSON.parse(localStorage.getItem('availableItems'));
+    const deviceSelectionContainer = document.getElementById('device-selection');
+
+    availableItems.forEach(item => {
+        const deviceDiv = document.createElement('div');
+        deviceDiv.innerHTML = `
+            <label for="${item}">${item}</label>
+            <input type="checkbox" id="${item}" name="devices" value="${item}">
+        `;
+        deviceSelectionContainer.appendChild(deviceDiv);
+    });
+
+    // Handle form submission for device selection
+    document.getElementById('device-selection-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent page refresh
+
+        selectedDevices = []; // Clear previous selections
+        availableItems.forEach(item => {
+            if (document.getElementById(item).checked) {
+                selectedDevices.push(item);
+            }
+        });
+
+        if (selectedDevices.length === 0) {
+            alert('Please select at least one device.');
+            return;
+        }
+
+        // If Portable Wi-Fi is selected, ask for IP permission
+        if (selectedDevices.includes("Wi-Fi Hotspot")) {
+            askForIPPermission();
+        } else {
+            // Proceed directly to payment page
+            storeDevicesAndRedirect();
+        }
+    });
+}
+
+// Ask for permission to access the IP address
+function askForIPPermission() {
+    if (confirm("To use the Portable Wi-Fi, we need permission to access your IP address. Do you grant permission?")) {
+        storeDevicesAndRedirect();
+    } else {
+        alert("Permission denied. You cannot rent the Portable Wi-Fi.");
+    }
+}
+
+// Store selected devices in localStorage and redirect to payment page
+function storeDevicesAndRedirect() {
+    localStorage.setItem('selectedDevices', selectedDevices.join(', '));
+
+    // Redirect to payment page
+    window.location.href = 'payment.html';
+}
+
+// Calculate total amount and proceed with payment on payment.html
+function calculatePayment() {
+    const pricePerDevice = 5; // Price per device
+    const selectedDevices = localStorage.getItem('selectedDevices').split(', ');
+
+    const deviceCount = selectedDevices.length;
+    const totalAmount = deviceCount * pricePerDevice;
+
+    document.getElementById('device-count').value = deviceCount;
+    document.getElementById('device-count-summary').textContent = deviceCount;
+    document.getElementById('total-amount-summary').textContent = totalAmount.toFixed(2);
+
+    // Handle payment confirmation
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Simulate successful payment process
+        alert('Payment successful! Your booking is confirmed.');
+
+        // Store booking details in localStorage
+        localStorage.setItem('totalAmount', totalAmount.toFixed(2));
+
+        // Redirect to confirmation page
+        window.location.href = 'confirmation.html';
+    });
 }
