@@ -11,9 +11,10 @@
         <h1>Payment for Locker Booking</h1>
         <form id="payment-form">
             <label for="device-count">Number of Devices:</label>
-            <input type="number" id="device-count" name="device-count" min="1" required>
+            <input type="number" id="device-count" name="device-count" min="1" required readonly>
             <button type="submit">Proceed to Pay</button>
         </form>
+
         <!-- Payment summary (hidden initially) -->
         <div id="payment-summary" style="display:none;">
             <h3>Payment Summary</h3>
@@ -22,53 +23,31 @@
             <button id="confirm-payment">Confirm Payment</button>
         </div>
     </div>
-    <script src="script.js"></script>
+
     <script>
-        // This value can be changed depending on the cost per device
-        const pricePerDevice = 10; // Example: $10 per device
-        // Get references to the form and payment summary elements
-        const paymentForm = document.getElementById('payment-form');
-        const paymentSummary = document.getElementById('payment-summary');
-        const deviceCountInput = document.getElementById('device-count');
-        const deviceCountSummary = document.getElementById('device-count-summary');
-        const totalAmountSummary = document.getElementById('total-amount-summary');
-        const confirmPaymentButton = document.getElementById('confirm-payment');
+        const pricePerDevice = 5; // Cost per device
+        const selectedDevices = localStorage.getItem('selectedDevices').split(', ');
 
-        // Handle form submission
-        paymentForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form from submitting and page refresh
-            const deviceCount = parseInt(deviceCountInput.value);
-            if (deviceCount && deviceCount > 0) {
-                const totalAmount = deviceCount * pricePerDevice;
-                deviceCountSummary.textContent = deviceCount;
-                totalAmountSummary.textContent = totalAmount.toFixed(2);
-                paymentSummary.style.display = 'block';
-                paymentForm.style.display = 'none';
-            } else {
-                alert('Please enter a valid number of devices.');
-            }
-        });
+        // Update the number of devices and total amount
+        const deviceCount = selectedDevices.length;
+        const totalAmount = deviceCount * pricePerDevice;
 
-        // Handle confirm payment action
-        confirmPaymentButton.addEventListener('click', function() {
-            const deviceCount = parseInt(deviceCountInput.value);
-            if (deviceCount && deviceCount > 0) {
-                // Simulate successful payment process
-                alert('Payment successful! Your booking is confirmed.');
-                
-                // Store data in localStorage
-                const totalAmount = deviceCount * pricePerDevice;
-                localStorage.setItem('totalAmount', totalAmount.toFixed(2));
-                localStorage.setItem('lockerLocation', localStorage.getItem('lockerLocation')); // Assuming locker location is stored
-                localStorage.setItem('rentedItems', localStorage.getItem('rentedItems')); // Assuming rented items are stored
+        document.getElementById('device-count').value = deviceCount;
+        document.getElementById('device-count-summary').textContent = deviceCount;
+        document.getElementById('total-amount-summary').textContent = totalAmount.toFixed(2);
 
-                console.log('Payment confirmed. Redirecting to confirmation.html...');
-                
-                // Redirect to confirmation page
-                window.location.href = 'confirmation.html';
-            } else {
-                alert('Please ensure that the payment details are correct.');
-            }
+        // Handle payment confirmation
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Simulate successful payment process
+            alert('Payment successful! Your booking is confirmed.');
+
+            // Store booking details in localStorage
+            localStorage.setItem('totalAmount', totalAmount.toFixed(2));
+
+            // Redirect to confirmation page
+            window.location.href = 'confirmation.html';
         });
     </script>
 </body>
