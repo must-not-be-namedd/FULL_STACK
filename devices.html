@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Devices</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Select Your Devices</h1>
+    <form id="device-selection-form">
+        <div id="device-options"></div> <!-- Device options will be dynamically inserted here -->
+        <button type="submit">Proceed to Payment</button>
+    </form>
+
+    <script>
+        // Retrieve locker information from localStorage
+        const lockerLocation = localStorage.getItem('lockerLocation');
+        const lockerItems = JSON.parse(localStorage.getItem('availableItems')); // Fix to use 'availableItems'
+
+        // Display available devices based on the locker selection
+        const deviceOptionsContainer = document.getElementById('device-options');
+        lockerItems.forEach(item => {
+            const deviceDiv = document.createElement('div');
+            deviceDiv.innerHTML = `
+                <label for="${item}">${item}</label>
+                <input type="checkbox" id="${item}" name="devices" value="${item}">
+            `;
+            deviceOptionsContainer.appendChild(deviceDiv);
+        });
+
+        // Handle form submission for device selection
+        document.getElementById('device-selection-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page refresh
+
+            const selectedDevices = [];
+            lockerItems.forEach(item => {
+                if (document.getElementById(item).checked) {
+                    selectedDevices.push(item);
+                }
+            });
+
+            // Check if at least one device is selected
+            if (selectedDevices.length === 0) {
+                alert('Please select at least one device.');
+                return;
+            }
+
+            // If Portable Wi-Fi is selected, ask for IP permission
+            if (selectedDevices.includes("Wi-Fi Hotspot")) {
+                askForIPPermission(selectedDevices);
+            } else {
+                // Proceed to payment page with selected devices
+                storeDevicesAndProceed(selectedDevices);
+            }
+        });
+
+        // Function to ask for IP address permission if Portable Wi-Fi is selected
+        function askForIPPermission(selectedDevices) {
+            if (confirm("To use the Portable Wi-Fi, we need permission to access your IP address. Do you grant permission?")) {
+                storeDevicesAndProceed(selectedDevices);
+            } else {
+                alert("Permission denied. You cannot rent the Portable Wi-Fi.");
+            }
+        }
+
+        // Store selected devices and redirect to the payment page
+        function storeDevicesAndProceed(selectedDevices) {
+            localStorage.setItem('selectedDevices', selectedDevices.join(', ')); // Save selected devices
+
+            // Redirect to payment page
+            window.location.href = 'payment.html';
+        }
+    </script>
+</body>
+</html>
