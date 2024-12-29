@@ -1,52 +1,24 @@
+<!-- Second Page: Signup -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locker Booking Service</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Signup</title>
 </head>
 <body>
-
-    <h1>Welcome to Locker Booking Service</h1>
-    <p>Are you a first-time visitor?</p>
-
-    <div id="visitor-check">
-        <button onclick="showSignup()">Yes, I want to create an account</button>
-        <button onclick="showLogin()">No, I already have an account</button>
-    </div>
-
-    <div id="signup-form" style="display:none;">
-        <h2>Create Your Account</h2>
+    <div id="signup-form">
+        <h1>Create an Account</h1>
         <form id="create-account">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
-
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br>
-
-            <button type="submit">Create Account</button>
+            <button type="submit">Sign Up</button>
         </form>
     </div>
-
-    <div id="login-form" style="display:none;">
-        <h2>Login to Your Account</h2>
-        <form id="login-account">
-            <label for="login-username">Username:</label>
-            <input type="text" id="login-username" name="login-username" required><br>
-
-            <label for="login-password">Password:</label>
-            <input type="password" id="login-password" name="login-password" required><br>
-
-            <button type="submit">Login</button>
-        </form>
-    </div>
-    <br>
-    <br>
-    
-
-    <footer>&copy; 2024 Locker Booking Service</footer>
-
     <script src="script.js"></script>
 </body>
 </html>
