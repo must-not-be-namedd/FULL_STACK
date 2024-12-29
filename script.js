@@ -3,6 +3,7 @@ let lockers = [
     { id: 2, location: "Bus Stop B", distance: 0.8, available: true, items: ["Wired Headphones", "Powerbank"] },
     { id: 3, location: "Metro Station C", distance: 2.3, available: true, items: ["Wi-Fi Hotspot", "Powerbank"] }
 ];
+
 let rented = false; // Track if the user has already rented an item
 let users = []; // Simulating a simple in-memory database
 let selectedDevices = []; // To store selected devices for payment
@@ -175,6 +176,7 @@ function displayAvailableDevices() {
 
         // If Portable Wi-Fi is selected, ask for IP permission
         if (selectedDevices.includes("Wi-Fi Hotspot")) {
+            console.log("Wi-Fi Hotspot selected, asking for permission.");
             askForIPPermission();
         } else {
             // Proceed directly to payment page
@@ -185,20 +187,31 @@ function displayAvailableDevices() {
 
 // Ask for permission to access the IP address
 function askForIPPermission() {
-    if (confirm("To use the Portable Wi-Fi, we need permission to access your IP address. Do you grant permission?")) {
+    // Debugging: Check if the function is called
+    console.log("Asking for IP address permission...");
+
+    // Simulating the permission request
+    const userPermission = confirm("To use the Portable Wi-Fi, we need permission to track your IP address. Do you grant permission?");
+    
+    // Check if the permission request was shown
+    if (userPermission) {
+        console.log("User granted permission.");
         storeDevicesAndRedirect();
     } else {
+        console.log("User denied permission.");
         alert("Permission denied. You cannot rent the Portable Wi-Fi.");
     }
 }
 
 // Store selected devices in localStorage and redirect to payment page
 function storeDevicesAndRedirect() {
+    console.log("Devices selected:", selectedDevices);
     localStorage.setItem('selectedDevices', selectedDevices.join(', '));
 
     // Redirect to payment page
     window.location.href = 'payment.html';
 }
+
 
 // Calculate total amount and proceed with payment on payment.html
 function calculatePayment() {
