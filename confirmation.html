@@ -29,12 +29,20 @@
         window.onload = function() {
             // Retrieve booking details from localStorage
             const lockerLocation = localStorage.getItem('lockerLocation');
-            const rentedItems = localStorage.getItem('rentedItems');
+            const rentedItems = localStorage.getItem('selectedDevices');  // Use 'selectedDevices' from localStorage
             const totalAmount = localStorage.getItem('totalAmount');
+
+            // Check if rented items exist
+            if (!rentedItems) {
+                document.getElementById('device-list').textContent = 'No devices rented.';
+            } else {
+                // Split the rented items string and join into a readable format
+                const deviceArray = rentedItems.split(', ');
+                document.getElementById('device-list').textContent = deviceArray.join(', ');
+            }
 
             // Populate the booking details on the confirmation page
             document.getElementById('locker-location').textContent = lockerLocation;
-            document.getElementById('device-list').textContent = rentedItems;
             document.getElementById('total-payment').textContent = totalAmount;
 
             // Generate the QR Code for the booking
