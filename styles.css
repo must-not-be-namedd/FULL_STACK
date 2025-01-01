@@ -1,6 +1,6 @@
 body {
-    font-family: 'Poppins', sans-serif;
-    color: #fff; /* White text color */
+    font-family: 'Roboto', sans-serif; /* Modern, clean font */
+    color: #333; /* Dark gray text to contrast with the light gray background */
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,7 +8,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    background-image: url('./images/bg.png'); /* Background image */
+    background-image: url('./images/bg.png'); /* Use your image here */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,10 +16,12 @@ body {
     padding-bottom: 20px;
 }
 
+/* General Typography */
 h1, p {
     text-align: center;
-    color: #fff; /* White text color for headings and paragraphs */
+    color: #222; /* Slightly darker gray for headings */
     margin-bottom: 10px;
+    font-weight: bold; /* Make headings stand out */
 }
 
 /* Center the form */
@@ -50,13 +52,14 @@ h1, p {
 
 #device-options label {
     margin-right: 8px;
+    color: #444; /* Slightly lighter gray for labels */
 }
 
 /* Button styling */
 form button {
     width: 100%;
-    background-color: #4a90e2;
-    color: #fff;
+    background-color: #555; /* Medium gray button color */
+    color: #f9f9f9; /* Light text for contrast */
     padding: 12px;
     border: none;
     border-radius: 5px;
@@ -65,7 +68,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #9b59b6; /* Violet shade for hover effect */
+    background-color: #666; /* Slightly lighter gray for hover effect */
     transform: scale(1.05);
 }
 
@@ -73,16 +76,37 @@ form button:hover {
 #signup-form, #login-form {
     margin-top: 20px;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    background-color: rgba(255, 255, 255, 0.9); /* Light overlay for contrast */
     border-radius: 10px;
     width: 300px;
     text-align: center;
 }
 
+#signup-form input, #login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Subtle border for input fields */
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
 /* Footer */
 footer {
     margin-top: 20px;
-    color: #fff; /* White text for the footer */
+    color: #444; /* Medium gray text for the footer */
     font-size: 14px;
     text-align: center;
+}
+
+/* Additional Adjustments */
+a {
+    color: #1a73e8; /* Professional blue for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #4181d5; /* Slightly lighter blue for hover effect */
 }
