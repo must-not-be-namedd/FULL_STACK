@@ -1,6 +1,8 @@
+/* Base Styles */
 body {
-    font-family: 'Roboto', sans-serif; /* Modern, clean font */
-    color: #333; /* Dark gray text to contrast with the light gray background */
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
     margin: 0;
     padding: 0;
     display: flex;
@@ -8,7 +10,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
-    background-image: url('./images/bg.png'); /* Use your image here */
+    background-image: url('./images/bg.png'); /* Optional */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -16,26 +18,28 @@ body {
     padding-bottom: 20px;
 }
 
-/* General Typography */
+/* Headings and Paragraphs */
 h1, p {
     text-align: center;
-    color: #222; /* Slightly darker gray for headings */
+    color: #ffffff;
     margin-bottom: 10px;
-    font-weight: bold; /* Make headings stand out */
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
-/* Center the form */
+/* Form Layout */
 #device-selection-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 90%;
     max-width: 600px;
     margin-top: 20px;
+    animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Center device options and buttons */
+/* Device Options */
 #device-options {
     display: flex;
     flex-direction: column;
@@ -52,61 +56,140 @@ h1, p {
 
 #device-options label {
     margin-right: 8px;
-    color: #444; /* Slightly lighter gray for labels */
+    color: #b0b0b0;
+    font-size: 1rem;
 }
 
-/* Button styling */
+/* Buttons */
 form button {
     width: 100%;
-    background-color: #555; /* Medium gray button color */
-    color: #f9f9f9; /* Light text for contrast */
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 14px;
+    border: 1px solid #333;
+    border-radius: 6px;
     cursor: pointer;
+    font-weight: 500;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 1rem;
 }
 
 form button:hover {
-    background-color: #666; /* Slightly lighter gray for hover effect */
+    background-color: #2c2c2c;
     transform: scale(1.05);
 }
 
-/* Optional: Adjust the signup form for better spacing */
+/* Forms */
 #signup-form, #login-form {
     margin-top: 20px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.9); /* Light overlay for contrast */
-    border-radius: 10px;
-    width: 300px;
+    padding: 24px;
+    background-color: rgba(30, 30, 30, 0.95);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 360px;
     text-align: center;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    animation: slideUp 0.5s ease-out;
 }
 
-#signup-form input, #login-form input {
+/* Inputs */
+#signup-form input,
+#login-form input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
-    border: 1px solid #ccc; /* Subtle border for input fields */
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    color: #333;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #1d1d1d;
+    color: #e0e0e0;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+}
+
+#signup-form input:focus,
+#login-form input:focus {
+    border-color: #5a5a5a;
+    box-shadow: 0 0 8px rgba(90, 90, 90, 0.5);
+    outline: none;
 }
 
 /* Footer */
 footer {
-    margin-top: 20px;
-    color: #444; /* Medium gray text for the footer */
+    margin-top: 30px;
+    color: #888;
     font-size: 14px;
     text-align: center;
+    padding: 10px;
 }
 
-/* Additional Adjustments */
+/* Links */
 a {
-    color: #1a73e8; /* Professional blue for links */
+    color: #76a9ff;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #4181d5; /* Slightly lighter blue for hover effect */
+    color: #a3c4ff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===================== */
+/* 📱 Responsive Styling */
+/* ===================== */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    form button {
+        font-size: 0.95rem;
+        padding: 12px;
+    }
+
+    #signup-form, #login-form {
+        width: 90%;
+        padding: 20px;
+    }
+
+    #device-options label {
+        font-size: 0.95rem;
+    }
+
+    #signup-form input,
+    #login-form input {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.1rem;
+    }
+
+    form button {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    #signup-form, #login-form {
+        width: 95%;
+        padding: 16px;
+    }
+
+    #signup-form input,
+    #login-form input {
+        font-size: 0.9rem;
+    }
 }
