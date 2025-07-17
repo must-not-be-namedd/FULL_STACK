@@ -4,23 +4,332 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Locker Booking - Metro & Bus Stops</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --dark-bg: #1A1A2E; /* Very dark blue/purple */
+            --form-bg-start: #2A2A4A; /* Slightly lighter for gradient start */
+            --form-bg-end: #1A1A2E; /* Darker for gradient end */
+            --button-gradient-start: #6A0DAD; /* Vibrant purple */
+            --button-gradient-end: #4A0080; /* Deeper purple */
+            --text-light: #E0E0E0;
+            --text-white: #FFFFFF;
+            --border-color: #444466; /* Subtle blue-grey border */
+            --input-bg: #1D1D3A; /* Darker input background */
+            --shadow-color-light: rgba(0, 0, 0, 0.4);
+            --shadow-color-dark: rgba(0, 0, 0, 0.8);
+            --link-color: #76a9ff; /* Original link color, still fits */
+            --link-hover-color: #a3c4ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Changed to Inter for a modern look */
+            background: var(--dark-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center; /* Centrally align content horizontally */
+            min-height: 100vh;
+            /* Optional: Adding a subtle radial gradient for depth, similar to the image */
+            background-image: radial-gradient(circle at top left, #2F2F50 0%, transparent 50%),
+                              radial-gradient(circle at bottom right, #1A1A2E 0%, transparent 50%);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding-top: 40px; /* Increased padding */
+            padding-bottom: 40px;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Headings and Paragraphs */
+        h1, p {
+            text-align: center;
+            color: var(--text-white);
+            margin-bottom: 15px; /* Increased margin */
+            font-weight: 700; /* Bolder */
+            font-size: 1.8rem; /* Slightly larger */
+            letter-spacing: 0.5px; /* Added letter spacing */
+        }
+
+        h1 {
+            overflow: hidden; /* Ensures the content is not visible until animated */
+            white-space: nowrap; /* Keeps the text on a single line */
+            margin: 0 auto; /* Centers the text */
+            border-right: .15em solid orange; /* The typing cursor */
+            animation: 
+                typing 3.5s steps(30, end) forwards, /* Typing effect */
+                blink-caret .75s step-end infinite; /* Blinking cursor */
+            width: 0; /* Start with zero width to hide text */
+            max-width: 100%; /* Ensure it doesn't overflow */
+            padding-right: 5px; /* Space for the cursor */
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            opacity: 0; /* Initially hide the paragraph */
+            animation: fadeIn 1s ease-in-out 3.5s forwards; /* Fade in after typing animation */
+        }
+
+        /* Main Button Styling (for "Find Nearby Lockers") */
+        .main-button {
+            /* Gradient background for buttons */
+            background: linear-gradient(135deg, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+            color: var(--text-white);
+            padding: 18px 30px; /* Increased padding for larger button */
+            border: none; /* No border for a cleaner look */
+            border-radius: 12px; /* More rounded corners */
+            cursor: pointer;
+            font-weight: 600; /* Bolder text */
+            transition: all 0.4s ease; /* Smooth transition for all properties, slightly slower */
+            font-size: 1.2rem; /* Significantly larger font */
+            box-shadow: 0 8px 20px var(--shadow-color-dark); /* Deeper shadow */
+            letter-spacing: 1px;
+            text-transform: uppercase; /* Uppercase text for buttons */
+            margin-top: 25px; /* Margin below paragraph */
+            margin-bottom: 40px; /* Margin before locker list */
+            min-width: 250px; /* Ensure a minimum width */
+            opacity: 0; /* Initially hide the button */
+            animation: fadeIn 1s ease-in-out 4s forwards; /* Fade in after paragraph */
+        }
+
+        .main-button:hover {
+            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%); /* Reverse gradient on hover */
+            transform: translateY(-5px) scale(1.03); /* Lift and slightly scale on hover */
+            box-shadow: 0 12px 25px var(--shadow-color-dark); /* Stronger shadow on hover */
+        }
+
+        .main-button:active {
+            transform: translateY(0px) scale(0.98); /* Press effect */
+            box-shadow: 0 5px 10px var(--shadow-color-dark);
+        }
+
+        /* Locker List (Placeholder) */
+        #locker-list {
+            width: 90%;
+            max-width: 800px;
+            min-height: 100px; /* Placeholder height */
+            background-color: rgba(30, 30, 48, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-color-dark);
+            margin-bottom: 40px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-style: italic;
+            border: 1px solid var(--border-color);
+            opacity: 0; /* Initially hide */
+            animation: fadeIn 1s ease-in-out 4.5s forwards; /* Fade in after button */
+        }
+
+        /* Guidelines Section */
+        .guidelines {
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(145deg, var(--form-bg-start) 0%, var(--form-bg-end) 100%);
+            border-radius: 18px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 25px var(--shadow-color-dark);
+            border: 1px solid var(--border-color);
+            text-align: left; /* Align text within guidelines */
+            opacity: 0; /* Initially hide */
+            animation: fadeIn 1s ease-in-out 5s forwards; /* Fade in after locker list */
+        }
+
+        .guidelines h3 {
+            color: var(--text-white);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .guidelines ul {
+            list-style: none; /* Remove default bullet points */
+            padding: 0;
+            margin: 0;
+        }
+
+        .guidelines li {
+            position: relative;
+            padding-left: 25px; /* Space for custom bullet */
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .guidelines li::before {
+            content: '•'; /* Custom bullet point */
+            color: var(--button-gradient-start); /* Purple bullet */
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            top: 0;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px; /* Increased margin */
+            color: #888;
+            font-size: 15px; /* Slightly larger font */
+            text-align: center;
+            padding: 15px;
+            letter-spacing: 0.3px;
+            opacity: 0; /* Initially hide */
+            animation: fadeIn 1s ease-in-out 5.5s forwards; /* Fade in after guidelines */
+        }
+
+        /* Links (if any were present, keeping for consistency) */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--link-hover-color);
+            text-shadow: 0 0 5px rgba(118, 169, 255, 0.5); /* Subtle text shadow on hover */
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 370px } /* Adjusted width to ensure "Devices" appears fully */
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ===================== */
+        /* 📱 Responsive Styling */
+        /* ===================== */
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.6rem;
+                animation: 
+                    typing 3.5s steps(26, end) forwards, /* Adjust steps for smaller screens */
+                    blink-caret .75s step-end infinite;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .main-button {
+                font-size: 1.1rem;
+                padding: 16px 25px;
+                border-radius: 10px;
+                min-width: 220px;
+            }
+
+            .guidelines {
+                width: 90%;
+                padding: 25px;
+                border-radius: 15px;
+            }
+
+            .guidelines h3 {
+                font-size: 1.3rem;
+            }
+
+            .guidelines li {
+                font-size: 0.95rem;
+            }
+
+            footer {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+                margin-bottom: 10px;
+                animation: 
+                    typing 3.5s steps(22, end) forwards, /* Adjust steps for smaller screens */
+                    blink-caret .75s step-end infinite;
+            }
+
+            p {
+                font-size: 0.95rem;
+            }
+
+            .main-button {
+                font-size: 1rem;
+                padding: 14px 20px;
+                border-radius: 8px;
+                min-width: 180px;
+            }
+
+            .guidelines {
+                width: 95%;
+                padding: 20px;
+                border-radius: 12px;
+                margin-top: 20px;
+            }
+
+            .guidelines h3 {
+                font-size: 1.2rem;
+            }
+
+            .guidelines li {
+                font-size: 0.9rem;
+            }
+
+            footer {
+                font-size: 13px;
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
     <h1>Book Lockers for Your Devices</h1>
     <p>Available lockers at nearby Metro Stations and Bus Stops</p>
 
-    <button onclick="getLocation()">Find Nearby Lockers</button>
+    <button class="main-button" onclick="getLocation()">Find Nearby Lockers</button>
 
-    <div id="locker-list"></div>
+    <div id="locker-list">
+        <p>Select the closest Locker that best suits you based on your current location</p>
+        <!-- Locker list will be populated here by script.js -->
+    </div>
 
     <div class="guidelines">
         <h3>Booking & Return Guidelines</h3>
         <ul>
             <li>You can rent up to 5 devices at a time.</li>
             <li>Ensure to return the rented devices within the stipulated time to avoid fines.</li>
-          <li>The cost of each device is decided on hourly-basis usage.User has to report to the booked locker with 30 minutes from the time of booking.
+            <li>The cost of each device is decided on hourly-basis usage. User has to report to the booked locker with 30 minutes from the time of booking.</li>
             <li>A late fine of $5 will be charged for each additional hour after the return deadline.</li>
             <li>Return the devices to the same locker where you rented them.</li>
         </ul>
@@ -28,7 +337,40 @@
     
     <footer>&copy; 2024 Locker Booking Service | Powered by GPS & Metro Stations</footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Placeholder for script.js functionality
+        // In a real application, this would contain logic for getLocation(),
+        // populating #locker-list, etc.
+        function getLocation() {
+            const lockerList = document.getElementById('locker-list');
+            lockerList.innerHTML = `
+                <div style="text-align: center; width: 100%; padding: 20px; color: var(--text-light);">
+                    <p style="margin-bottom: 10px; font-weight: bold; color: var(--text-white);">Searching for nearby lockers...</p>
+                    <div style="border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid var(--button-gradient-start); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto;"></div>
+                </div>
+            `;
+            // Simulate a delay before showing results
+            setTimeout(() => {
+                lockerList.innerHTML = `
+                    <div style="text-align: left; width: 100%;">
+                        <p style="margin-bottom: 10px; font-weight: bold; color: var(--text-white);">Found 3 Lockers:</p>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin-bottom: 8px; color: var(--text-light);">• Locker A (Metro Station X) - 5 available</li>
+                            <li style="margin-bottom: 8px; color: var(--text-light);">• Locker B (Bus Stop Y) - 2 available</li>
+                            <li style="margin-bottom: 8px; color: var(--text-light);">• Locker C (Metro Station Z) - 8 available</li>
+                        </ul>
+                        <p style="margin-top: 15px; font-style: italic; font-size: 0.9rem; color: #aaa;">(This is a simulation. Actual location data would be used here.)</p>
+                    </div>
+                `;
+            }, 3000); // Increased timeout to simulate search
+        }
+
+        // Spinner animation for loading state
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        // Changed to a single line string to avoid any potential multi-line string parsing issues
+        styleSheet.innerText = "@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }";
+        document.head.appendChild(styleSheet);
+    </script>
 </body>
 </html>
-
