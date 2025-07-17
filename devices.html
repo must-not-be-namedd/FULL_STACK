@@ -4,10 +4,402 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Devices</title>
-    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --dark-bg: #1A1A2E; /* Very dark blue/purple */
+            --form-bg-start: #2A2A4A; /* Slightly lighter for gradient start */
+            --form-bg-end: #1A1A2E; /* Darker for gradient end */
+            --button-gradient-start: #6A0DAD; /* Vibrant purple */
+            --button-gradient-end: #4A0080; /* Deeper purple */
+            --text-light: #E0E0E0;
+            --text-white: #FFFFFF;
+            --border-color: #444466; /* Subtle blue-grey border */
+            --input-bg: #1D1D3A; /* Darker input background */
+            --shadow-color-light: rgba(0, 0, 0, 0.4);
+            --shadow-color-dark: rgba(0, 0, 0, 0.8);
+            --link-color: #76a9ff; /* Original link color, still fits */
+            --link-hover-color: #a3c4ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif; /* Changed to Inter for a modern look */
+            background: var(--dark-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center; /* Centrally align content horizontally */
+            min-height: 100vh;
+            /* Optional: Adding a subtle radial gradient for depth, similar to the image */
+            background-image: radial-gradient(circle at top left, #2F2F50 0%, transparent 50%),
+                              radial-gradient(circle at bottom right, #1A1A2E 0%, transparent 50%);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding-top: 40px; /* Increased padding */
+            padding-bottom: 40px;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Headings and Paragraphs */
+        h1, p {
+            text-align: center;
+            color: var(--text-white);
+            margin-bottom: 15px; /* Increased margin */
+            font-weight: 700; /* Bolder */
+            font-size: 1.8rem; /* Slightly larger */
+            letter-spacing: 0.5px; /* Added letter spacing */
+        }
+
+        h1 {
+            overflow: hidden; /* Ensures the content is not visible until animated */
+            white-space: nowrap; /* Keeps the text on a single line */
+            margin: 0 auto; /* Centers the text */
+            border-right: .15em solid orange; /* The typing cursor */
+            animation: 
+                typing 3.5s steps(30, end) forwards, /* Typing effect */
+                blink-caret .75s step-end infinite; /* Blinking cursor */
+            width: 0; /* Start with zero width to hide text */
+            max-width: 100%; /* Ensure it doesn't overflow */
+            padding-right: 5px; /* Space for the cursor */
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            opacity: 0; /* Initially hide the paragraph */
+            animation: fadeIn 1s ease-in-out 3.5s forwards; /* Fade in after typing animation */
+        }
+
+        /* Form Layout */
+        #device-selection-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 600px;
+            margin-top: 30px; /* Increased margin */
+            /* Removed fadeIn animation here as it's applied to the form container */
+            padding: 30px; /* Increased padding */
+            /* Gradient background for forms */
+            background: linear-gradient(145deg, var(--form-bg-start) 0%, var(--form-bg-end) 100%);
+            border-radius: 18px; /* Even more rounded corners */
+            box-shadow: 0 10px 25px var(--shadow-color-dark); /* Deeper shadow */
+            border: 1px solid var(--border-color); /* Subtle border */
+            opacity: 0; /* Initially hide the form */
+            animation: fadeIn 1s ease-in-out 4s forwards; /* Fade in after paragraph */
+        }
+
+        /* Device Options */
+        #device-options {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align labels/checkboxes to the left within their container */
+            justify-content: center;
+            margin-bottom: 25px; /* Increased margin */
+            width: 100%;
+        }
+
+        #device-options div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px; /* Increased margin */
+            width: 100%; /* Ensure each div takes full width */
+        }
+
+        #device-options label {
+            margin-right: 15px; /* Increased margin for spacing */
+            color: var(--text-light);
+            font-size: 1.05rem;
+            font-weight: 500;
+            flex-grow: 1; /* Allow label to take available space */
+            text-align: left; /* Align label text to the left */
+        }
+
+        #device-options input[type="checkbox"] {
+            width: 20px; /* Custom size for checkbox */
+            height: 20px;
+            accent-color: var(--button-gradient-start); /* Style checkbox accent color */
+            cursor: pointer;
+            border-radius: 4px; /* Slightly rounded checkbox */
+        }
+
+        /* Inputs */
+        #device-selection-form input[type="number"] {
+            width: calc(100% - 24px); /* Account for padding */
+            padding: 14px; /* Increased padding */
+            margin-bottom: 20px; /* Increased margin */
+            border: 1px solid var(--border-color);
+            border-radius: 8px; /* More rounded corners */
+            background-color: var(--input-bg);
+            color: var(--text-white);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            font-size: 1.05rem;
+            box-shadow: inset 0 2px 5px var(--shadow-color-light); /* Inner shadow for depth */
+            text-align: center; /* Center text in number input */
+        }
+
+        #device-selection-form input[type="number"]:focus {
+            border-color: #8A2BE2; /* Purple focus border */
+            box-shadow: 0 0 12px rgba(138, 43, 226, 0.6), inset 0 2px 5px var(--shadow-color-light); /* Glow effect on focus */
+            background-color: #252545; /* Slightly lighter background on focus */
+            outline: none;
+        }
+
+        /* Total Charge Display */
+        #device-selection-form p {
+            font-size: 1.3rem; /* Larger for emphasis */
+            font-weight: 600;
+            color: var(--text-white);
+            margin-top: 10px;
+            margin-bottom: 25px; /* Space before button */
+        }
+
+        /* Buttons */
+        .main-button {
+            /* Gradient background for buttons */
+            background: linear-gradient(135deg, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+            color: var(--text-white);
+            padding: 18px 30px; /* Increased padding for larger button */
+            border: none; /* No border for a cleaner look */
+            border-radius: 12px; /* More rounded corners */
+            cursor: pointer;
+            font-weight: 600; /* Bolder text */
+            transition: all 0.4s ease; /* Smooth transition for all properties, slightly slower */
+            font-size: 1.2rem; /* Significantly larger font */
+            box-shadow: 0 8px 20px var(--shadow-color-dark); /* Deeper shadow */
+            letter-spacing: 1px;
+            text-transform: uppercase; /* Uppercase text for buttons */
+            min-width: 250px; /* Ensure a minimum width */
+            margin-top: 0; /* Reset margin from previous button styles */
+            margin-bottom: 0; /* Reset margin from previous button styles */
+        }
+
+        .main-button:hover {
+            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%); /* Reverse gradient on hover */
+            transform: translateY(-5px) scale(1.03); /* Lift and slightly scale on hover */
+            box-shadow: 0 12px 25px var(--shadow-color-dark); /* Stronger shadow on hover */
+        }
+
+        .main-button:active {
+            transform: translateY(0px) scale(0.98); /* Press effect */
+            box-shadow: 0 5px 10px var(--shadow-color-dark);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px; /* Increased margin */
+            color: #888;
+            font-size: 15px; /* Slightly larger font */
+            text-align: center;
+            padding: 15px;
+            letter-spacing: 0.3px;
+            opacity: 0; /* Initially hide */
+            animation: fadeIn 1s ease-in-out 5s forwards; /* Fade in after form */
+        }
+
+        /* Links (if any were present, keeping for consistency) */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            font-weight: 500;
+        }
+
+        a:hover {
+            color: var(--link-hover-color);
+            text-shadow: 0 0 5px rgba(118, 169, 255, 0.5); /* Subtle text shadow on hover */
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 370px } /* Adjusted width to ensure "Devices" appears fully */
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange }
+        }
+
+        /* Custom Modal Styling */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .custom-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .custom-modal-content {
+            background: linear-gradient(145deg, var(--form-bg-start) 0%, var(--form-bg-end) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color-dark);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid var(--border-color);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .custom-modal-overlay.active .custom-modal-content {
+            transform: translateY(0);
+        }
+
+        .custom-modal-content h2 {
+            color: var(--text-white);
+            margin-top: 0;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .custom-modal-content p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .custom-modal-content button {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* Blue gradient for modal button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .custom-modal-content button:hover {
+            background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+            transform: scale(1.05);
+        }
+
+
+        /* ===================== */
+        /* 📱 Responsive Styling */
+        /* ===================== */
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.6rem;
+                animation: 
+                    typing 3.5s steps(26, end) forwards, /* Adjust steps for smaller screens */
+                    blink-caret .75s step-end infinite;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .main-button {
+                font-size: 1.1rem;
+                padding: 16px 25px;
+                border-radius: 10px;
+                min-width: 220px;
+            }
+
+            #device-selection-form {
+                width: 90%;
+                padding: 25px;
+                border-radius: 15px;
+            }
+
+            #device-options label {
+                font-size: 1rem;
+            }
+
+            #device-selection-form input[type="number"] {
+                font-size: 1rem;
+                padding: 12px;
+            }
+
+            footer {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+                margin-bottom: 10px;
+                animation: 
+                    typing 3.5s steps(22, end) forwards, /* Adjust steps for smaller screens */
+                    blink-caret .75s step-end infinite;
+            }
+
+            p {
+                font-size: 0.95rem;
+            }
+
+            .main-button {
+                font-size: 1rem;
+                padding: 14px 20px;
+                border-radius: 8px;
+                min-width: 180px;
+            }
+
+            #device-selection-form {
+                width: 95%;
+                padding: 20px;
+                border-radius: 12px;
+                margin-top: 20px;
+            }
+
+            #device-selection-form input[type="number"] {
+                font-size: 0.95rem;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            #device-options label {
+                font-size: 0.95rem;
+            }
+
+            footer {
+                font-size: 13px;
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+
     <h1>Select Your Devices</h1>
+    <p>Choose the devices you need and the rental duration.</p>
+
     <form id="device-selection-form">
         <div id="device-options">
             <!-- Power Bank -->
@@ -30,83 +422,106 @@
         <label for="rental-duration">How many hours would you like to rent the selected devices?</label>
         <input type="number" id="rental-duration" name="rental-duration" min="1" max="48" required>
 
-        <p>Total Charge: $<span id="total-charge">0</span></p>
+        <p>Total Charge: ₹<span id="total-charge">0</span></p>
 
-        <button type="submit">Proceed to Payment</button>
+        <button type="submit" class="main-button">Proceed to Payment</button>
     </form>
 
+    <footer>&copy; 2024 Locker Booking Service | Powered by GPS & Metro Stations</footer>
+
+    <!-- Custom Modal for Alerts -->
+    <div id="custom-alert-modal" class="custom-modal-overlay">
+        <div class="custom-modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <button onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
     <script>
-        const pricePerDevice = 5; // Cost per device per hour
+        const USD_TO_INR_RATE = 83.5; // Approximate conversion rate
+        const pricePerDeviceUSD = 5; // Cost per device per hour in USD
         const availableDevices = ["powerbank", "portable-wifi", "headphones"];
         
         // Handle rental duration input and calculate total charge
         const rentalDurationInput = document.getElementById('rental-duration');
-        const deviceOptions = document.querySelectorAll('input[name="devices"]');
-        
+        const deviceCheckboxes = document.querySelectorAll('input[name="devices"]');
+        const totalChargeSpan = document.getElementById('total-charge');
+
         // Function to calculate total charge
         function calculateTotalCharge() {
             const rentalDuration = parseInt(rentalDurationInput.value) || 0;
             let totalDevices = 0;
-            let totalCharge = 0;
 
             // Calculate the total number of selected devices
-            availableDevices.forEach(device => {
-                const isChecked = document.getElementById(device).checked;
-                if (isChecked) {
-                    totalDevices += 1;  // Add 1 for each selected device
+            deviceCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    totalDevices += 1;
                 }
             });
 
-            // Calculate the total charge
+            let totalChargeUSD = 0;
             if (rentalDuration && totalDevices > 0) {
-                totalCharge = totalDevices * pricePerDevice * rentalDuration; // $5 per device per hour
+                totalChargeUSD = totalDevices * pricePerDeviceUSD * rentalDuration;
             }
 
-            // Update total charge display
-            document.getElementById('total-charge').textContent = totalCharge.toFixed(2);
+            const totalChargeINR = totalChargeUSD * USD_TO_INR_RATE;
+            totalChargeSpan.textContent = totalChargeINR.toFixed(2);
         }
 
         // Attach event listeners to the checkboxes and rental duration
-        deviceOptions.forEach(option => {
-            option.addEventListener('change', calculateTotalCharge); // Listen for device selection changes
+        deviceCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calculateTotalCharge);
         });
         
-        rentalDurationInput.addEventListener('input', calculateTotalCharge); // Listen for rental duration changes
+        rentalDurationInput.addEventListener('input', calculateTotalCharge);
+
+        // Initial calculation on page load
+        calculateTotalCharge();
+
+        // Custom Alert Functions
+        function showCustomAlert(title, message) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('custom-alert-modal').classList.add('active');
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('custom-alert-modal').classList.remove('active');
+        }
 
         // Handle form submission
         document.getElementById('device-selection-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent page refresh
 
             const selectedDevices = [];
-            let totalDevices = 0;
-
-            availableDevices.forEach(device => {
-                const isChecked = document.getElementById(device).checked;
-                if (isChecked) {
-                    selectedDevices.push(device);
-                    totalDevices += 1;
+            deviceCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedDevices.push(checkbox.value);
                 }
             });
 
-            // Check if devices are selected
             if (selectedDevices.length === 0) {
-                alert('Please select at least one device.');
+                showCustomAlert('Selection Required', 'Please select at least one device.');
                 return;
             }
 
-            const rentalDuration = rentalDurationInput.value;
-            if (!rentalDuration || rentalDuration <= 0 || rentalDuration > 48) {
-                alert('Please enter a valid rental duration (1-48 hours).');
+            const rentalDuration = parseInt(rentalDurationInput.value);
+            if (isNaN(rentalDuration) || rentalDuration <= 0 || rentalDuration > 48) {
+                showCustomAlert('Invalid Duration', 'Please enter a valid rental duration (1-48 hours).');
                 return;
             }
+
+            const totalAmountINR = parseFloat(totalChargeSpan.textContent);
 
             // Store selected devices and rental information in localStorage
             localStorage.setItem('selectedDevices', JSON.stringify(selectedDevices));
             localStorage.setItem('rentalDuration', rentalDuration);
-            localStorage.setItem('totalAmount', totalDevices * pricePerDevice * rentalDuration);
+            localStorage.setItem('totalAmount', totalAmountINR.toFixed(2)); // Store INR value
 
-            // Proceed to payment page
-            window.location.href = 'payment.html';
+            // Proceed to payment page (assuming payment.html exists)
+            // window.location.href = 'payment.html';
+            showCustomAlert('Proceeding to Payment', `You selected: ${selectedDevices.join(', ')} for ${rentalDuration} hours. Total: ₹${totalAmountINR.toFixed(2)}. (Navigation to payment.html would happen here)`);
         });
     </script>
 </body>
