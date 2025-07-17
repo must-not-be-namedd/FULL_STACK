@@ -8,23 +8,23 @@
     <style>
         /* Base Styles */
         :root {
-            --dark-bg: #1A1A2E; /* Very dark blue/purple */
-            --form-bg-start: #2A2A4A; /* Slightly lighter for gradient start */
-            --form-bg-end: #1A1A2E; /* Darker for gradient end */
-            --button-gradient-start: #6A0DAD; /* Vibrant purple */
-            --button-gradient-end: #4A0080; /* Deeper purple */
+            --dark-bg: #151525; /* Slightly less dark blue/purple */
+            --form-bg-start: #202038; /* More subtle for gradient start */
+            --form-bg-end: #151525; /* More subtle for gradient end */
+            --button-gradient-start: #5A0DA0; /* More subtle purple */
+            --button-gradient-end: #3A0070; /* Deeper, less flashy purple */
             --text-light: #E0E0E0;
             --text-white: #FFFFFF;
-            --border-color: #444466; /* Subtle blue-grey border */
-            --input-bg: #1D1D3A; /* Darker input background */
-            --shadow-color-light: rgba(0, 0, 0, 0.4);
-            --shadow-color-dark: rgba(0, 0, 0, 0.8);
-            --link-color: #76a9ff; /* Original link color, still fits */
+            --border-color: #383855; /* Subtle blue-grey border */
+            --input-bg: #181830; /* Darker input background */
+            --shadow-color-light: rgba(0, 0, 0, 0.3);
+            --shadow-color-dark: rgba(0, 0, 0, 0.7);
+            --link-color: #76a9ff;
             --link-hover-color: #a3c4ff;
         }
 
         body {
-            font-family: 'Inter', sans-serif; /* Changed to Inter for a modern look */
+            font-family: 'Inter', sans-serif;
             background: var(--dark-bg);
             color: var(--text-light);
             margin: 0;
@@ -32,101 +32,145 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center; /* Centrally align content horizontally */
+            align-items: center;
             min-height: 100vh;
-            /* Optional: Adding a subtle radial gradient for depth, similar to the image */
-            background-image: radial-gradient(circle at top left, #2F2F50 0%, transparent 50%),
-                              radial-gradient(circle at bottom right, #1A1A2E 0%, transparent 50%);
+            background-image: radial-gradient(circle at top left, #252540 0%, transparent 50%),
+                              radial-gradient(circle at bottom right, #151525 0%, transparent 50%);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding-top: 40px; /* Increased padding */
+            padding-top: 40px;
             padding-bottom: 40px;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         /* Headings and Paragraphs */
         h1, p {
             text-align: center;
             color: var(--text-white);
-            margin-bottom: 15px; /* Increased margin */
-            font-weight: 700; /* Bolder */
-            font-size: 1.8rem; /* Slightly larger */
-            letter-spacing: 0.5px; /* Added letter spacing */
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
         }
 
         h1 {
-            overflow: hidden; /* Ensures the content is not visible until animated */
-            white-space: nowrap; /* Keeps the text on a single line */
-            margin: 0 auto; /* Centers the text */
-            border-right: .15em solid orange; /* The typing cursor */
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            border-right: .15em solid orange;
             animation: 
-                typing 3.5s steps(30, end) forwards, /* Typing effect */
-                blink-caret .75s step-end infinite; /* Blinking cursor */
-            width: 0; /* Start with zero width to hide text */
-            max-width: 100%; /* Ensure it doesn't overflow */
-            padding-right: 5px; /* Space for the cursor */
+                typing 3.5s steps(30, end) forwards,
+                blink-caret .75s step-end infinite;
+            width: 0;
+            max-width: 100%;
+            padding-right: 5px;
         }
 
         p {
             font-size: 1.1rem;
             color: var(--text-light);
             line-height: 1.6;
-            opacity: 0; /* Initially hide the paragraph */
-            animation: fadeIn 1s ease-in-out 3.5s forwards; /* Fade in after typing animation */
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 3.5s forwards;
         }
 
         /* Main Button Styling (for "Find Nearby Lockers") */
         .main-button {
-            /* Gradient background for buttons */
             background: linear-gradient(135deg, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
             color: var(--text-white);
-            padding: 18px 30px; /* Increased padding for larger button */
-            border: none; /* No border for a cleaner look */
-            border-radius: 12px; /* More rounded corners */
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 600; /* Bolder text */
-            transition: all 0.4s ease; /* Smooth transition for all properties, slightly slower */
-            font-size: 1.2rem; /* Significantly larger font */
-            box-shadow: 0 8px 20px var(--shadow-color-dark); /* Deeper shadow */
+            font-weight: 600;
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 8px 20px var(--shadow-color-dark);
             letter-spacing: 1px;
-            text-transform: uppercase; /* Uppercase text for buttons */
-            margin-top: 25px; /* Margin below paragraph */
-            margin-bottom: 40px; /* Margin before locker list */
-            min-width: 250px; /* Ensure a minimum width */
-            opacity: 0; /* Initially hide the button */
-            animation: fadeIn 1s ease-in-out 4s forwards; /* Fade in after paragraph */
+            text-transform: uppercase;
+            margin-top: 25px;
+            margin-bottom: 40px;
+            min-width: 250px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 4s forwards;
         }
 
         .main-button:hover {
-            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%); /* Reverse gradient on hover */
-            transform: translateY(-5px) scale(1.03); /* Lift and slightly scale on hover */
-            box-shadow: 0 12px 25px var(--shadow-color-dark); /* Stronger shadow on hover */
+            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 25px var(--shadow-color-dark);
         }
 
         .main-button:active {
-            transform: translateY(0px) scale(0.98); /* Press effect */
+            transform: translateY(0px) scale(0.98);
             box-shadow: 0 5px 10px var(--shadow-color-dark);
         }
 
-        /* Locker List (Placeholder) */
+        /* Locker List Container */
         #locker-list {
             width: 90%;
             max-width: 800px;
-            min-height: 100px; /* Placeholder height */
             background-color: rgba(30, 30, 48, 0.7);
             border-radius: 15px;
             box-shadow: 0 5px 15px var(--shadow-color-dark);
             margin-bottom: 40px;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             color: #888;
             font-style: italic;
             border: 1px solid var(--border-color);
-            opacity: 0; /* Initially hide */
-            animation: fadeIn 1s ease-in-out 4.5s forwards; /* Fade in after button */
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 4.5s forwards;
+        }
+
+        #locker-list p {
+            font-style: normal;
+            margin-bottom: 20px;
+            color: var(--text-white);
+        }
+
+        .location-button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .location-button {
+            background: linear-gradient(135deg, var(--form-bg-start) 0%, var(--form-bg-end) 100%); /* More subtle background */
+            color: var(--text-white);
+            padding: 15px 20px;
+            border: 1px solid var(--border-color); /* Added a subtle border */
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-align: left;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .location-button:hover {
+            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%); /* Use button gradient on hover */
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .location-button:active {
+            transform: translateY(0px) scale(0.99);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .location-button .distance {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-left: 10px;
         }
 
         /* Guidelines Section */
@@ -139,9 +183,9 @@
             max-width: 600px;
             box-shadow: 0 10px 25px var(--shadow-color-dark);
             border: 1px solid var(--border-color);
-            text-align: left; /* Align text within guidelines */
-            opacity: 0; /* Initially hide */
-            animation: fadeIn 1s ease-in-out 5s forwards; /* Fade in after locker list */
+            text-align: left;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 5s forwards;
         }
 
         .guidelines h3 {
@@ -154,14 +198,14 @@
         }
 
         .guidelines ul {
-            list-style: none; /* Remove default bullet points */
+            list-style: none;
             padding: 0;
             margin: 0;
         }
 
         .guidelines li {
             position: relative;
-            padding-left: 25px; /* Space for custom bullet */
+            padding-left: 25px;
             margin-bottom: 12px;
             font-size: 1rem;
             color: var(--text-light);
@@ -169,8 +213,8 @@
         }
 
         .guidelines li::before {
-            content: '•'; /* Custom bullet point */
-            color: var(--button-gradient-start); /* Purple bullet */
+            content: '•';
+            color: var(--button-gradient-start);
             position: absolute;
             left: 0;
             font-size: 1.2rem;
@@ -179,14 +223,14 @@
 
         /* Footer */
         footer {
-            margin-top: 40px; /* Increased margin */
+            margin-top: 40px;
             color: #888;
-            font-size: 15px; /* Slightly larger font */
+            font-size: 15px;
             text-align: center;
             padding: 15px;
             letter-spacing: 0.3px;
-            opacity: 0; /* Initially hide */
-            animation: fadeIn 1s ease-in-out 5.5s forwards; /* Fade in after guidelines */
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 5.5s forwards;
         }
 
         /* Links (if any were present, keeping for consistency) */
@@ -199,7 +243,7 @@
 
         a:hover {
             color: var(--link-hover-color);
-            text-shadow: 0 0 5px rgba(118, 169, 255, 0.5); /* Subtle text shadow on hover */
+            text-shadow: 0 0 5px rgba(118, 169, 255, 0.5);
         }
 
         /* Animations */
@@ -210,7 +254,7 @@
 
         @keyframes typing {
             from { width: 0 }
-            to { width: 370px } /* Adjusted width to ensure "Devices" appears fully */
+            to { width: 390px } /* Increased width to ensure "Devices" appears fully */
         }
 
         @keyframes blink-caret {
@@ -223,6 +267,76 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* Custom Modal Styling (for alerts) */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .custom-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .custom-modal-content {
+            background: linear-gradient(145deg, var(--form-bg-start) 0%, var(--form-bg-end) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color-dark);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid var(--border-color);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .custom-modal-overlay.active .custom-modal-content {
+            transform: translateY(0);
+        }
+
+        .custom-modal-content h2 {
+            color: var(--text-white);
+            margin-top: 0;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .custom-modal-content p {
+            color: var(--text-light);
+            margin-bottom: 25px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .custom-modal-content button {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .custom-modal-content button:hover {
+            background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+            transform: scale(1.05);
+        }
+
+
         /* ===================== */
         /* 📱 Responsive Styling */
         /* ===================== */
@@ -231,7 +345,7 @@
             h1 {
                 font-size: 1.6rem;
                 animation: 
-                    typing 3.5s steps(26, end) forwards, /* Adjust steps for smaller screens */
+                    typing 3.5s steps(26, end) forwards,
                     blink-caret .75s step-end infinite;
             }
 
@@ -275,7 +389,7 @@
                 font-size: 1.4rem;
                 margin-bottom: 10px;
                 animation: 
-                    typing 3.5s steps(22, end) forwards, /* Adjust steps for smaller screens */
+                    typing 3.5s steps(22, end) forwards,
                     blink-caret .75s step-end infinite;
             }
 
@@ -314,13 +428,13 @@
 </head>
 <body>
 
-    <h1>Book Lockers for Your Devices</h1>
+    <h1>Book Lockers for Devices</h1>
     <p>Available lockers at nearby Metro Stations and Bus Stops</p>
 
     <button class="main-button" onclick="getLocation()">Find Nearby Lockers</button>
 
     <div id="locker-list">
-        <p>Select the closest Locker that best suits you based on your current location</p>
+        <p>Select the Locker that best suits you based on your current location</p>
         <!-- Locker list will be populated here by script.js -->
     </div>
 
@@ -337,10 +451,28 @@
     
     <footer>&copy; 2024 Locker Booking Service | Powered by GPS & Metro Stations</footer>
 
+    <!-- Custom Modal for Alerts -->
+    <div id="custom-alert-modal" class="custom-modal-overlay">
+        <div class="custom-modal-content">
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <button onclick="closeCustomAlert()">OK</button>
+        </div>
+    </div>
+
     <script>
+        // Custom Alert Functions
+        function showCustomAlert(title, message) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-message').textContent = message;
+            document.getElementById('custom-alert-modal').classList.add('active');
+        }
+
+        function closeCustomAlert() {
+            document.getElementById('custom-alert-modal').classList.remove('active');
+        }
+
         // Placeholder for script.js functionality
-        // In a real application, this would contain logic for getLocation(),
-        // populating #locker-list, etc.
         function getLocation() {
             const lockerList = document.getElementById('locker-list');
             lockerList.innerHTML = `
@@ -349,26 +481,63 @@
                     <div style="border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid var(--button-gradient-start); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto;"></div>
                 </div>
             `;
-            // Simulate a delay before showing results
+            
+            // Simulate fetching user's current location and nearby lockers
             setTimeout(() => {
-                lockerList.innerHTML = `
-                    <div style="text-align: left; width: 100%;">
-                        <p style="margin-bottom: 10px; font-weight: bold; color: var(--text-white);">Found 3 Lockers:</p>
-                        <ul style="list-style: none; padding: 0;">
-                            <li style="margin-bottom: 8px; color: var(--text-light);">• Locker A (Metro Station X) - 5 available</li>
-                            <li style="margin-bottom: 8px; color: var(--text-light);">• Locker B (Bus Stop Y) - 2 available</li>
-                            <li style="margin-bottom: 8px; color: var(--text-light);">• Locker C (Metro Station Z) - 8 available</li>
-                        </ul>
-                        <p style="margin-top: 15px; font-style: italic; font-size: 0.9rem; color: #aaa;">(This is a simulation. Actual location data would be used here.)</p>
-                    </div>
-                `;
-            }, 3000); // Increased timeout to simulate search
+                const userLocation = { lat: 12.9716, lon: 77.5946 }; // Bangalore city center (example)
+
+                const nearbyLockers = [
+                    { name: "Majestic Metro Station", lat: 12.9767, lon: 77.5713, type: "Metro Station" },
+                    { name: "Indiranagar Metro Station", lat: 12.9749, lon: 77.6403, type: "Metro Station" },
+                    { name: "Jayanagar 4th Block Bus Stop", lat: 12.9293, lon: 77.5843, type: "Bus Stop" },
+                    { name: "Electronic City Phase 1", lat: 12.8484, lon: 77.6601, type: "Bus Stop" },
+                    { name: "MG Road Metro Station", lat: 12.9756, lon: 77.6062, type: "Metro Station" },
+                    { name: "Koramangala 80 Feet Road", lat: 12.9345, lon: 77.6186, type: "Bus Stop" }
+                ];
+
+                // Function to calculate distance (simplified Haversine formula for small distances)
+                function getDistance(lat1, lon1, lat2, lon2) {
+                    const R = 6371; // Radius of Earth in kilometers
+                    const dLat = (lat2 - lat1) * Math.PI / 180;
+                    const dLon = (lon2 - lon1) * Math.PI / 180;
+                    const a = 
+                        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    const distance = R * c; // Distance in km
+                    return distance;
+                }
+
+                // Calculate distances and sort
+                const lockersWithDistance = nearbyLockers.map(locker => {
+                    const distance = getDistance(userLocation.lat, userLocation.lon, locker.lat, locker.lon);
+                    return { ...locker, distance: distance.toFixed(2) };
+                }).sort((a, b) => a.distance - b.distance); // Sort by distance ascending
+
+                let lockerHtml = `<p style="margin-bottom: 20px; font-weight: bold; color: var(--text-white);">Found Lockers Near You:</p><div class="location-button-group">`;
+                lockersWithDistance.forEach(locker => {
+                    lockerHtml += `
+                        <button class="location-button" onclick="selectLocker('${locker.name}')">
+                            <span>${locker.name} (${locker.type})</span>
+                            <span class="distance">${locker.distance} km</span>
+                        </button>
+                    `;
+                });
+                lockerHtml += `</div>`;
+                
+                lockerList.innerHTML = lockerHtml;
+            }, 2000); // Simulate search delay
+        }
+
+        // Function to handle locker selection and navigate to devices.html
+        function selectLocker(locationName) {
+            localStorage.setItem('lockerLocation', locationName); // Store selected locker location
+            window.location.href = 'devices.html'; // Navigate to devices.html
         }
 
         // Spinner animation for loading state
         const styleSheet = document.createElement("style");
         styleSheet.type = "text/css";
-        // Changed to a single line string to avoid any potential multi-line string parsing issues
         styleSheet.innerText = "@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }";
         document.head.appendChild(styleSheet);
     </script>
