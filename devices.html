@@ -8,23 +8,23 @@
     <style>
         /* Base Styles */
         :root {
-            --dark-bg: #1A1A2E; /* Very dark blue/purple */
-            --form-bg-start: #2A2A4A; /* Slightly lighter for gradient start */
-            --form-bg-end: #1A1A2E; /* Darker for gradient end */
-            --button-gradient-start: #6A0DAD; /* Vibrant purple */
-            --button-gradient-end: #4A0080; /* Deeper purple */
+            --dark-bg: #151525; /* Slightly less dark blue/purple */
+            --form-bg-start: #202038; /* More subtle for gradient start */
+            --form-bg-end: #151525; /* More subtle for gradient end */
+            --button-gradient-start: #5A0DA0; /* More subtle purple */
+            --button-gradient-end: #3A0070; /* Deeper, less flashy purple */
             --text-light: #E0E0E0;
             --text-white: #FFFFFF;
-            --border-color: #444466; /* Subtle blue-grey border */
-            --input-bg: #1D1D3A; /* Darker input background */
-            --shadow-color-light: rgba(0, 0, 0, 0.4);
-            --shadow-color-dark: rgba(0, 0, 0, 0.8);
-            --link-color: #76a9ff; /* Original link color, still fits */
+            --border-color: #383855; /* Subtle blue-grey border */
+            --input-bg: #181830; /* Darker input background */
+            --shadow-color-light: rgba(0, 0, 0, 0.3);
+            --shadow-color-dark: rgba(0, 0, 0, 0.7);
+            --link-color: #76a9ff;
             --link-hover-color: #a3c4ff;
         }
 
         body {
-            font-family: 'Inter', sans-serif; /* Changed to Inter for a modern look */
+            font-family: 'Inter', sans-serif;
             background: var(--dark-bg);
             color: var(--text-light);
             margin: 0;
@@ -34,35 +34,34 @@
             justify-content: flex-start;
             align-items: center; /* Centrally align content horizontally */
             min-height: 100vh;
-            /* Optional: Adding a subtle radial gradient for depth, similar to the image */
-            background-image: radial-gradient(circle at top left, #2F2F50 0%, transparent 50%),
-                              radial-gradient(circle at bottom right, #1A1A2E 0%, transparent 50%);
+            background-image: radial-gradient(circle at top left, #252540 0%, transparent 50%),
+                              radial-gradient(circle at bottom right, #151525 0%, transparent 50%);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding-top: 40px; /* Increased padding */
+            padding-top: 40px;
             padding-bottom: 40px;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
         /* Headings and Paragraphs */
         h1, p {
             text-align: center;
             color: var(--text-white);
-            margin-bottom: 15px; /* Increased margin */
-            font-weight: 700; /* Bolder */
-            font-size: 1.8rem; /* Slightly larger */
-            letter-spacing: 0.5px; /* Added letter spacing */
+            margin-bottom: 15px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
         }
 
         h1 {
-            overflow: hidden; /* Ensures the content is not visible until animated */
-            white-space: nowrap; /* Keeps the text on a single line */
-            margin: 0 auto; /* Centers the text */
-            border-right: .15em solid orange; /* The typing cursor */
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            border-right: .15em solid orange;
             animation: 
-                typing 3.5s steps(30, end) forwards, /* Typing effect */
-                blink-caret .75s step-end infinite; /* Blinking cursor */
+                typing 3.5s steps(20, end) forwards, /* Adjusted steps for "Select Your Devices" */
+                blink-caret .75s step-end infinite;
             width: 0; /* Start with zero width to hide text */
             max-width: 100%; /* Ensure it doesn't overflow */
             padding-right: 5px; /* Space for the cursor */
@@ -84,124 +83,148 @@
             justify-content: center;
             width: 90%;
             max-width: 600px;
-            margin-top: 30px; /* Increased margin */
-            /* Removed fadeIn animation here as it's applied to the form container */
-            padding: 30px; /* Increased padding */
-            /* Gradient background for forms */
+            margin-top: 30px;
+            padding: 30px;
             background: linear-gradient(145deg, var(--form-bg-start) 0%, var(--form-bg-end) 100%);
-            border-radius: 18px; /* Even more rounded corners */
-            box-shadow: 0 10px 25px var(--shadow-color-dark); /* Deeper shadow */
-            border: 1px solid var(--border-color); /* Subtle border */
-            opacity: 0; /* Initially hide the form */
-            animation: fadeIn 1s ease-in-out 4s forwards; /* Fade in after paragraph */
+            border-radius: 18px;
+            box-shadow: 0 10px 25px var(--shadow-color-dark);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 4s forwards;
         }
 
         /* Device Options */
         #device-options {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align labels/checkboxes to the left within their container */
+            align-items: flex-start;
             justify-content: center;
-            margin-bottom: 25px; /* Increased margin */
+            margin-bottom: 25px;
             width: 100%;
         }
 
         #device-options div {
             display: flex;
             align-items: center;
-            margin-bottom: 15px; /* Increased margin */
-            width: 100%; /* Ensure each div takes full width */
+            margin-bottom: 15px;
+            width: 100%;
+            justify-content: space-between; /* Distribute items evenly */
         }
 
         #device-options label {
-            margin-right: 15px; /* Increased margin for spacing */
             color: var(--text-light);
             font-size: 1.05rem;
             font-weight: 500;
-            flex-grow: 1; /* Allow label to take available space */
-            text-align: left; /* Align label text to the left */
+            flex-grow: 1;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* For name and cost */
+            padding-right: 15px; /* Space before quantity input */
         }
 
-        #device-options input[type="checkbox"] {
-            width: 20px; /* Custom size for checkbox */
-            height: 20px;
-            accent-color: var(--button-gradient-start); /* Style checkbox accent color */
-            cursor: pointer;
-            border-radius: 4px; /* Slightly rounded checkbox */
+        #device-options .cost {
+            font-size: 0.9em;
+            color: #bbb;
+            margin-left: 10px;
+            white-space: nowrap; /* Prevent cost from wrapping */
         }
 
-        /* Inputs */
-        #device-selection-form input[type="number"] {
-            width: calc(100% - 24px); /* Account for padding */
-            padding: 14px; /* Increased padding */
-            margin-bottom: 20px; /* Increased margin */
+        #device-options input[type="number"] {
+            width: 70px; /* Smaller width for quantity input */
+            padding: 8px;
             border: 1px solid var(--border-color);
-            border-radius: 8px; /* More rounded corners */
+            border-radius: 6px;
+            background-color: var(--input-bg);
+            color: var(--text-white);
+            text-align: center;
+            -moz-appearance: textfield; /* Hide arrows in Firefox */
+        }
+
+        /* Hide arrows for Chrome, Safari, Edge */
+        #device-options input[type="number"]::-webkit-outer-spin-button,
+        #device-options input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        #device-options input[type="number"]:focus {
+            border-color: #8A2BE2;
+            box-shadow: 0 0 8px rgba(138, 43, 226, 0.5);
+            outline: none;
+        }
+
+        /* Inputs (for rental duration) */
+        #device-selection-form input[type="number"]#rental-duration {
+            width: calc(100% - 24px);
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             background-color: var(--input-bg);
             color: var(--text-white);
             transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             font-size: 1.05rem;
-            box-shadow: inset 0 2px 5px var(--shadow-color-light); /* Inner shadow for depth */
-            text-align: center; /* Center text in number input */
+            box-shadow: inset 0 2px 5px var(--shadow-color-light);
+            text-align: center;
         }
 
-        #device-selection-form input[type="number"]:focus {
-            border-color: #8A2BE2; /* Purple focus border */
-            box-shadow: 0 0 12px rgba(138, 43, 226, 0.6), inset 0 2px 5px var(--shadow-color-light); /* Glow effect on focus */
-            background-color: #252545; /* Slightly lighter background on focus */
+        #device-selection-form input[type="number"]#rental-duration:focus {
+            border-color: #8A2BE2;
+            box-shadow: 0 0 12px rgba(138, 43, 226, 0.6), inset 0 2px 5px var(--shadow-color-light);
+            background-color: #252545;
             outline: none;
         }
 
         /* Total Charge Display */
         #device-selection-form p {
-            font-size: 1.3rem; /* Larger for emphasis */
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--text-white);
             margin-top: 10px;
-            margin-bottom: 25px; /* Space before button */
+            margin-bottom: 25px;
         }
 
         /* Buttons */
         .main-button {
-            /* Gradient background for buttons */
             background: linear-gradient(135deg, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
             color: var(--text-white);
-            padding: 18px 30px; /* Increased padding for larger button */
-            border: none; /* No border for a cleaner look */
-            border-radius: 12px; /* More rounded corners */
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
             cursor: pointer;
-            font-weight: 600; /* Bolder text */
-            transition: all 0.4s ease; /* Smooth transition for all properties, slightly slower */
-            font-size: 1.2rem; /* Significantly larger font */
-            box-shadow: 0 8px 20px var(--shadow-color-dark); /* Deeper shadow */
+            font-weight: 600;
+            transition: all 0.4s ease;
+            font-size: 1.2rem;
+            box-shadow: 0 8px 20px var(--shadow-color-dark);
             letter-spacing: 1px;
-            text-transform: uppercase; /* Uppercase text for buttons */
-            min-width: 250px; /* Ensure a minimum width */
-            margin-top: 0; /* Reset margin from previous button styles */
-            margin-bottom: 0; /* Reset margin from previous button styles */
+            text-transform: uppercase;
+            min-width: 250px;
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
         .main-button:hover {
-            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%); /* Reverse gradient on hover */
-            transform: translateY(-5px) scale(1.03); /* Lift and slightly scale on hover */
-            box-shadow: 0 12px 25px var(--shadow-color-dark); /* Stronger shadow on hover */
+            background: linear-gradient(135deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%);
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 12px 25px var(--shadow-color-dark);
         }
 
         .main-button:active {
-            transform: translateY(0px) scale(0.98); /* Press effect */
+            transform: translateY(0px) scale(0.98);
             box-shadow: 0 5px 10px var(--shadow-color-dark);
         }
 
         /* Footer */
         footer {
-            margin-top: 40px; /* Increased margin */
+            margin-top: 40px;
             color: #888;
-            font-size: 15px; /* Slightly larger font */
+            font-size: 15px;
             text-align: center;
             padding: 15px;
             letter-spacing: 0.3px;
-            opacity: 0; /* Initially hide */
-            animation: fadeIn 1s ease-in-out 5s forwards; /* Fade in after form */
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 5s forwards;
         }
 
         /* Links (if any were present, keeping for consistency) */
@@ -214,7 +237,7 @@
 
         a:hover {
             color: var(--link-hover-color);
-            text-shadow: 0 0 5px rgba(118, 169, 255, 0.5); /* Subtle text shadow on hover */
+            text-shadow: 0 0 5px rgba(118, 169, 255, 0.5);
         }
 
         /* Animations */
@@ -225,7 +248,7 @@
 
         @keyframes typing {
             from { width: 0 }
-            to { width: 370px } /* Adjusted width to ensure "Devices" appears fully */
+            to { width: 330px } /* Adjusted width for "Select Your Devices" */
         }
 
         @keyframes blink-caret {
@@ -287,7 +310,7 @@
         }
 
         .custom-modal-content button {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* Blue gradient for modal button */
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
             color: white;
             padding: 10px 20px;
             border: none;
@@ -302,6 +325,29 @@
             transform: scale(1.05);
         }
 
+        /* Caution Message Styling */
+        .caution-message {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee4d4d 100%); /* Reddish gradient */
+            color: var(--text-white);
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid #c0392b;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 4.8s forwards, pulse 2s infinite alternate 5.8s; /* Fade in then pulse */
+            max-width: 500px;
+            line-height: 1.4;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
+            100% { transform: scale(1.02); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7); }
+        }
+
 
         /* ===================== */
         /* 📱 Responsive Styling */
@@ -311,7 +357,7 @@
             h1 {
                 font-size: 1.6rem;
                 animation: 
-                    typing 3.5s steps(26, end) forwards, /* Adjust steps for smaller screens */
+                    typing 3.5s steps(18, end) forwards, /* Adjusted steps for smaller screens */
                     blink-caret .75s step-end infinite;
             }
 
@@ -336,9 +382,14 @@
                 font-size: 1rem;
             }
 
-            #device-selection-form input[type="number"] {
+            #device-selection-form input[type="number"]#rental-duration {
                 font-size: 1rem;
                 padding: 12px;
+            }
+
+            .caution-message {
+                font-size: 0.9rem;
+                padding: 12px 20px;
             }
 
             footer {
@@ -356,7 +407,7 @@
                 font-size: 1.4rem;
                 margin-bottom: 10px;
                 animation: 
-                    typing 3.5s steps(22, end) forwards, /* Adjust steps for smaller screens */
+                    typing 3.5s steps(16, end) forwards, /* Adjusted steps for smaller screens */
                     blink-caret .75s step-end infinite;
             }
 
@@ -378,7 +429,7 @@
                 margin-top: 20px;
             }
 
-            #device-selection-form input[type="number"] {
+            #device-selection-form input[type="number"]#rental-duration {
                 font-size: 0.95rem;
                 padding: 10px;
                 margin-bottom: 15px;
@@ -386,6 +437,11 @@
 
             #device-options label {
                 font-size: 0.95rem;
+            }
+
+            .caution-message {
+                font-size: 0.85rem;
+                padding: 10px 15px;
             }
 
             footer {
@@ -404,18 +460,33 @@
         <div id="device-options">
             <!-- Power Bank -->
             <div>
-                <label for="powerbank">Power Bank</label>
-                <input type="checkbox" id="powerbank" name="devices" value="Power Bank">
+                <label for="powerbank-quantity">Power Bank <span class="cost">(₹300/hr)</span></label>
+                <input type="number" id="powerbank-quantity" name="powerbank" value="0" min="0" max="5">
             </div>
             <!-- Portable WiFi -->
             <div>
-                <label for="portable-wifi">Portable WiFi</label>
-                <input type="checkbox" id="portable-wifi" name="devices" value="Portable WiFi">
+                <label for="portable-wifi-quantity">Portable WiFi <span class="cost">(₹250/hr)</span></label>
+                <input type="number" id="portable-wifi-quantity" name="portable-wifi" value="0" min="0" max="5">
             </div>
             <!-- Headphones -->
             <div>
-                <label for="headphones">Headphones</label>
-                <input type="checkbox" id="headphones" name="devices" value="Headphones">
+                <label for="headphones-quantity">Headphones <span class="cost">(₹200/hr)</span></label>
+                <input type="number" id="headphones-quantity" name="headphones" value="0" min="0" max="5">
+            </div>
+            <!-- Earbuds -->
+            <div>
+                <label for="earbuds-quantity">Earbuds <span class="cost">(₹100/hr)</span></label>
+                <input type="number" id="earbuds-quantity" name="earbuds" value="0" min="0" max="5">
+            </div>
+            <!-- Charger Cables -->
+            <div>
+                <label for="charger-cables-quantity">Charger Cables <span class="cost">(₹100/hr)</span></label>
+                <input type="number" id="charger-cables-quantity" name="charger-cables" value="0" min="0" max="5">
+            </div>
+            <!-- Earphones -->
+            <div>
+                <label for="earphones-quantity">Earphones <span class="cost">(₹100/hr)</span></label>
+                <input type="number" id="earphones-quantity" name="earphones" value="0" min="0" max="5">
             </div>
         </div>
 
@@ -426,6 +497,10 @@
 
         <button type="submit" class="main-button">Proceed to Payment</button>
     </form>
+
+    <div class="caution-message">
+        <strong>Important Notice:</strong> For security and accountability, please be advised that your IP address is being monitored. We urge all users to handle rented devices responsibly and adhere to our terms of service. Misuse or damage to devices may result in additional charges or legal action.
+    </div>
 
     <footer>&copy; 2024 Locker Booking Service | Powered by GPS & Metro Stations</footer>
 
@@ -440,41 +515,55 @@
 
     <script>
         const USD_TO_INR_RATE = 83.5; // Approximate conversion rate
-        const pricePerDeviceUSD = 5; // Cost per device per hour in USD
-        const availableDevices = ["powerbank", "portable-wifi", "headphones"];
         
+        // Define costs per device per hour in INR
+        const deviceCostsINR = {
+            "powerbank": 300,
+            "portable-wifi": 250,
+            "headphones": 200,
+            "earbuds": 100,
+            "charger-cables": 100,
+            "earphones": 100
+        };
+
+        // Mapping of device IDs to their display names
+        const deviceMap = {
+            "powerbank": "Power Bank",
+            "portable-wifi": "Portable WiFi",
+            "headphones": "Headphones",
+            "earbuds": "Earbuds",
+            "charger-cables": "Charger Cables",
+            "earphones": "Earphones"
+        };
+
         // Handle rental duration input and calculate total charge
         const rentalDurationInput = document.getElementById('rental-duration');
-        const deviceCheckboxes = document.querySelectorAll('input[name="devices"]');
+        const deviceQuantityInputs = document.querySelectorAll('#device-options input[type="number"]');
         const totalChargeSpan = document.getElementById('total-charge');
 
         // Function to calculate total charge
         function calculateTotalCharge() {
             const rentalDuration = parseInt(rentalDurationInput.value) || 0;
-            let totalDevices = 0;
-
-            // Calculate the total number of selected devices
-            deviceCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    totalDevices += 1;
-                }
+            let totalChargeINR = 0;
+            
+            deviceQuantityInputs.forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                const deviceName = input.name;
+                const costPerDevice = deviceCostsINR[deviceName] || 0;
+                totalChargeINR += (quantity * costPerDevice * rentalDuration);
             });
 
-            let totalChargeUSD = 0;
-            if (rentalDuration && totalDevices > 0) {
-                totalChargeUSD = totalDevices * pricePerDeviceUSD * rentalDuration;
-            }
-
-            const totalChargeINR = totalChargeUSD * USD_TO_INR_RATE;
             totalChargeSpan.textContent = totalChargeINR.toFixed(2);
         }
 
-        // Attach event listeners to the checkboxes and rental duration
-        deviceCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', calculateTotalCharge);
+        // Attach event listeners to the quantity inputs and rental duration
+        deviceQuantityInputs.forEach(input => {
+            input.addEventListener('input', calculateTotalCharge);
+            input.addEventListener('change', calculateTotalCharge);
         });
         
         rentalDurationInput.addEventListener('input', calculateTotalCharge);
+        rentalDurationInput.addEventListener('change', calculateTotalCharge);
 
         // Initial calculation on page load
         calculateTotalCharge();
@@ -495,14 +584,18 @@
             event.preventDefault(); // Prevent page refresh
 
             const selectedDevices = [];
-            deviceCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    selectedDevices.push(checkbox.value);
+            let totalSelectedQuantity = 0;
+
+            deviceQuantityInputs.forEach(input => {
+                const quantity = parseInt(input.value) || 0;
+                if (quantity > 0) {
+                    selectedDevices.push({ name: deviceMap[input.name], quantity: quantity });
+                    totalSelectedQuantity += quantity;
                 }
             });
 
-            if (selectedDevices.length === 0) {
-                showCustomAlert('Selection Required', 'Please select at least one device.');
+            if (totalSelectedQuantity === 0) {
+                showCustomAlert('Selection Required', 'Please select at least one device and specify a quantity greater than 0.');
                 return;
             }
 
@@ -519,9 +612,8 @@
             localStorage.setItem('rentalDuration', rentalDuration);
             localStorage.setItem('totalAmount', totalAmountINR.toFixed(2)); // Store INR value
 
-            // Proceed to payment page (assuming payment.html exists)
-            // window.location.href = 'payment.html';
-            showCustomAlert('Proceeding to Payment', `You selected: ${selectedDevices.join(', ')} for ${rentalDuration} hours. Total: ₹${totalAmountINR.toFixed(2)}. (Navigation to payment.html would happen here)`);
+            // Proceed to confirmation page
+            window.location.href = 'confirmation.html';
         });
     </script>
 </body>
