@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Successful!</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Updated QR Code library URL to a working CDN (unpkg is often more reliable) -->
-    <script src="https://unpkg.com/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- Removed QR Code library URL as it's no longer needed -->
     <style>
         /* Base Styles - Copied from device-selection-ui */
         :root {
@@ -135,14 +134,17 @@
             font-size: 1.4rem;
         }
 
-        /* QR Code Styling */
-        #qr-code {
+        /* QR Code Styling (for the image) */
+        #qr-code-image {
             padding: 10px;
             background-color: var(--text-white); /* White background for QR code */
             border-radius: 8px;
             display: inline-block; /* To center the QR code image */
             box-shadow: 0 2px 8px var(--shadow-color-light);
             margin: 0 auto; /* Center the QR code */
+            width: 128px; /* Ensure consistent size */
+            height: 128px; /* Ensure consistent size */
+            object-fit: contain; /* Ensure the image fits within the bounds */
         }
 
         /* Footer */
@@ -252,7 +254,8 @@
 
         <div id="ticket">
             <h3>Your Ticket</h3>
-            <div id="qr-code"></div>
+            <!-- Replaced QR code generation div with an image tag -->
+            <img id="qr-code-image" src="https://placehold.co/128x128/FFFFFF/000000?text=QR+Code" alt="QR Code" onerror="this.src='https://placehold.co/128x128/FFFFFF/000000?text=QR+Error';">
             <p style="font-size: 0.9rem; margin-top: 15px; color: #aaa; font-style: italic; text-align: center;">Scan this QR code at the locker to access your devices.</p>
         </div>
 
@@ -280,7 +283,6 @@
             const randomLockerLocation = bangaloreLocations[Math.floor(Math.random() * bangaloreLocations.length)];
             
             // Retrieve booking details from localStorage
-            // Note: lockerLocation is now randomly generated on this page, not from localStorage
             const rentedItems = JSON.parse(localStorage.getItem('selectedDevices'));
             const totalAmount = localStorage.getItem('totalAmount'); // This is already in INR
 
@@ -288,24 +290,23 @@
             document.getElementById('locker-location').textContent = randomLockerLocation;
             
             if (rentedItems && rentedItems.length > 0) {
-                document.getElementById('device-list').textContent = rentedItems.join(', ');
+                // Format the rented items for display (e.g., "Power Bank (2), Headphones (1)")
+                const formattedRentedItems = rentedItems.map(item => `${item.name} (${item.quantity})`).join(', ');
+                document.getElementById('device-list').textContent = formattedRentedItems;
             } else {
                 document.getElementById('device-list').textContent = 'No devices selected.';
             }
             
             document.getElementById('total-payment').textContent = totalAmount || '0.00';
 
-            // Generate the QR Code for the booking
-            const qrCodeText = `Locker Location: ${randomLockerLocation}\nDevices: ${rentedItems ? rentedItems.join(', ') : 'None'}\nTotal Payment: ₹${totalAmount || '0.00'}`;
-            
-            const qrCode = new QRCode(document.getElementById("qr-code"), {
-                text: qrCodeText,
-                width: 128,
-                height: 128,
-                colorDark : "#1A1A2E", // Match dark theme
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
+            // Set the src of the QR code image.
+            // For a real application, you'd generate a QR code image on your server
+            // or use a client-side library to convert data to a data URL if needed.
+            // For this request, we're using a placeholder image.
+            const qrCodeImageElement = document.getElementById("qr-code-image");
+            // You can replace 'qr.png' with your actual image path or a dynamic URL
+            qrCodeImageElement.src = 'qr.png'; 
+            qrCodeImageElement.alt = `QR Code for Locker: ${randomLockerLocation}, Devices: ${rentedItems ? rentedItems.map(item => item.name).join(', ') : 'None'}, Total: ₹${totalAmount || '0.00'}`;
         };
     </script>
 </body>
