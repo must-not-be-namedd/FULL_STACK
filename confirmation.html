@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Successful!</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Removed QR Code library URL as it's no longer needed -->
     <style>
         /* Base Styles - Copied from device-selection-ui */
         :root {
@@ -22,6 +21,8 @@
             --shadow-color-dark: rgba(0, 0, 0, 0.8);
             --link-color: #76a9ff; /* Original link color, still fits */
             --link-hover-color: #a3c4ff;
+            --popup-bg: #3A3A5A; /* Slightly lighter than dark-bg for popup */
+            --popup-border: #6A0DAD; /* Border color for popup */
         }
 
         body {
@@ -176,6 +177,84 @@
         }
 
         /* ===================== */
+        /* 📣 Popup Styles */
+        /* ===================== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: linear-gradient(145deg, var(--popup-bg) 0%, var(--dark-bg) 100%);
+            color: var(--text-white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color-dark);
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            border: 2px solid var(--popup-border);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .popup-overlay.show .popup-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .popup-content h4 {
+            color: var(--button-gradient-start);
+            font-size: 1.6rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .popup-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            opacity: 1; /* Override parent p opacity animation */
+            animation: none; /* Disable default p animation */
+        }
+
+        .popup-close-btn {
+            background: linear-gradient(90deg, var(--button-gradient-start) 0%, var(--button-gradient-end) 100%);
+            color: var(--text-white);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .popup-close-btn:hover {
+            background: linear-gradient(90deg, var(--button-gradient-end) 0%, var(--button-gradient-start) 100%);
+            transform: translateY(-2px);
+        }
+
+        /* ===================== */
         /* 📱 Responsive Styling */
         /* ===================== */
 
@@ -202,6 +281,16 @@
             }
             footer {
                 font-size: 14px;
+            }
+            .popup-content {
+                max-width: 90%;
+                padding: 25px;
+            }
+            .popup-content h4 {
+                font-size: 1.4rem;
+            }
+            .popup-content p {
+                font-size: 1rem;
             }
         }
 
@@ -237,6 +326,15 @@
                 font-size: 13px;
                 margin-top: 20px;
             }
+            .popup-content {
+                padding: 20px;
+            }
+            .popup-content h4 {
+                font-size: 1.2rem;
+            }
+            .popup-content p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -254,7 +352,6 @@
 
         <div id="ticket">
             <h3>Your Ticket</h3>
-            <!-- Replaced QR code generation div with an image tag -->
             <img id="qr-code-image" src="qr.png" alt="QR Code" onerror="this.src='https://placehold.co/128x128/FFFFFF/000000?text=QR+Error';">
             <p style="font-size: 0.9rem; margin-top: 15px; color: #aaa; font-style: italic; text-align: center;">Scan this QR code at the locker to access your devices.</p>
         </div>
@@ -262,6 +359,16 @@
     </div>
 
     <footer>&copy; 2024 Locker Booking Service | Powered by GPS & Metro Stations</footer>
+
+    <div id="infoPopup" class="popup-overlay">
+        <div class="popup-content">
+            <h4>Important Information</h4>
+            <p>
+                To collect your rented devices, kindly proceed to the designated counter at the metro station or bus stop to complete your payment. Upon successful payment, please scan the provided QR code at the locker for immediate access to your items.
+            </p>
+            <button class="popup-close-btn">Understood</button>
+        </div>
+    </div>
 
     <script>
         window.onload = function() {
@@ -300,15 +407,29 @@
             document.getElementById('total-payment').textContent = totalAmount || '0.00';
 
             // Set the src of the QR code image.
-            // For a real application, you'd generate a QR code image on your server
-            // or use a client-side library to convert data to a data URL if needed.
-            // For this request, we're using a placeholder image.
             const qrCodeImageElement = document.getElementById("qr-code-image");
-            // You can replace 'qr.png' with your actual image path or a dynamic URL
             qrCodeImageElement.src = 'qr.png'; 
             qrCodeImageElement.alt = `QR Code for Locker: ${randomLockerLocation}, Devices: ${rentedItems ? rentedItems.map(item => item.name).join(', ') : 'None'}, Total: ₹${totalAmount || '0.00'}`;
+
+            // --- Popup Logic ---
+            const popupOverlay = document.getElementById('infoPopup');
+            const closeButton = popupOverlay.querySelector('.popup-close-btn');
+
+            setTimeout(() => {
+                popupOverlay.classList.add('show');
+            }, 4000); // Show popup after 4 seconds
+
+            closeButton.addEventListener('click', () => {
+                popupOverlay.classList.remove('show');
+            });
+
+            // Optional: Close popup if clicking outside (on the overlay itself)
+            popupOverlay.addEventListener('click', (event) => {
+                if (event.target === popupOverlay) {
+                    popupOverlay.classList.remove('show');
+                }
+            });
         };
     </script>
 </body>
 </html>
-
